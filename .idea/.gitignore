@@ -1,0 +1,8 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../../../../:\SIKO\themeforest-X5JbNlSz-metronic-responsive-admin-dashboard-template\metronic_v7.1.6\theme\html_laravel\demo1\skeleton\.idea/dataSources/
+/dataSources.local.xml
+# Editor-based HTTP Client requests
+/httpRequests/

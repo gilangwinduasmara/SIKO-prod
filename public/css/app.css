@@ -1,0 +1,53 @@
+body{
+    scroll-behavior: smooth;
+}
+.img-fit{
+    object-fit: cover;
+}
+.sticky-toolbar{
+    display: none;
+}
+.icon-pengumuman {
+    position: absolute;
+    -webkit-transform: rotate(-56deg) scale(1.2);
+    transform: rotate(-56deg) scale(1.2);
+    right: 20px;
+    top: 128vh;
+}
+.content{
+    padding-top: 0;
+}
+
+
+.text-slide-item{
+
+}
+
+.yellow-bar{
+    background-color: #4e73df;
+    width: 200px;
+    height: 6px;
+
+}
+
+.role-select{
+    width: 200px;
+}
+
+.popup-forms{
+    width: 500px;
+}
+
+.button-submit{
+    width: 275px;
+}
+
+.toggle{
+    width: 100px;
+}
+
+.ic-pengumuman{
+    position: absolute;
+    top: -72px;
+    transform: rotate(-45deg);
+}

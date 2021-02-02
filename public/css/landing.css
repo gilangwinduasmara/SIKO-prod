@@ -1,0 +1,47 @@
+.role-select {
+    display: flex;
+    justify-content: space-around;
+    width: 50%;
+    border-radius: 80px;
+    box-shadow: 4px 2px 24px rgba(116,158,205,.35);
+    padding: 12px;
+    margin: 24px auto;
+    color: #202a36;
+}
+
+.toggle {
+    margin-left: -128px;
+    margin-top: -12px;
+    background: #4e73df;
+    color: #fff;
+    width: 120px;
+    height: 43px;
+    border-radius: 32px;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    transition: all .2s;
+}
+
+.active-role {
+    color: #749ecd;
+}
+
+body.modal-open {
+    overflow: hidden;
+    position: fixed;
+}
+
+.popup-forms input {
+    background: #eaeaea;
+    border-radius: 90px;
+    border: none;
+    padding: 8px 12px;
+    width: 50%;
+
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 4px rgba(0,0,0,.25);
+    padding: 8px;
+}

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\JadwalKonselor;
 use App\Konseli;
 use App\Konselor;
+use App\Mail\NotifEmail;
 use App\Setting;
 use App\User;
 use Illuminate\Support\Facades\Http;
@@ -15,7 +16,9 @@ use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -23,10 +26,13 @@ class UserController extends Controller
 
 
     public function storeBase64($image_64){
+        if(strpos($image_64, 'avatar') !== false || strpos($image_64, 'default') !== false){
+            return null;
+        }
         $image_64 = substr($image_64, strpos($image_64,",")+1);
         $file = base64_decode($image_64);
         $folderName = 'public/avatars/';
-        $safeName = Str::random(10).'.'.'png';
+        $safeName = Str::random(32).'.'.'png';
         $destinationPath = public_path() . $folderName;
         $success = file_put_contents(public_path().'/avatars/'.$safeName, $file);
         return $safeName;
@@ -88,95 +94,107 @@ class UserController extends Controller
         if($user->role == 'admin'){
             $konselor = Konselor::find(request()->id);
         }
+        try{
+            DB::beginTransaction();
+            $konselorUser = User::find($konselor->user_id);
+            $konselorUser->name = request()->personal['nama'];
+            $konselorUser->email = request()->personal['email'];
+            $konselorUser->avatar = $this->storeBase64(request()->personal['avatar']) ?? $konselorUser['avatar'] ?? 'default.jpg';
 
-        $konselorUser = User::find($konselor->user_id);
-        $konselorUser->name = request()->personal['nama'];
-        $konselorUser->email = request()->personal['email'];
+            $konselorUser->save();
 
-        $konselorUser->save();
+            $konselor->nama_konselor = request()->personal['nama'];
+            $konselor->profesi_konselor = request()->personal['profesi'];
+            $konselor->email_konselor = request()->personal['email'];
+            $konselor->no_hp_konselor = request()->personal['nohp'];
 
-        $konselor->nama_konselor = request()->personal['nama'];
-        $konselor->profesi_konselor = request()->personal['profesi'];
-        $konselor->email_konselor = request()->personal['email'];
-        $konselor->no_hp_konselor = request()->personal['nohp'];
+            $konselor->save();
 
-        $konselor->save();
-
-
-        // if(count((array)request()->dataJadwal) > $setting->session_limit){
-        //     return response()->json([
-        //         'success' => false,
-        //         'error' => 'Jumlah jadwal konseling sudah sesuai batas maksimal konseling'
-        //     ]);
-        // }
-
-        for($i=0; $i<count((array)request()->dataJadwal);$i++){
-            $itemJadwal = request()->dataJadwal[$i];
-            if($itemJadwal['id'] == "new"){
-                JadwalKonselor::create([
-                    'hari' => $itemJadwal['hari'],
-                    'jam_mulai' => $itemJadwal['jam_mulai'],
-                    'jam_akhir' => $itemJadwal['jam_mulai']+1,
-                    'konselor_id'=> $konselor['id'],
-                    'available' => 'true'
-                ]);
-            }else{
-                $jadwal = JadwalKonselor::find($itemJadwal['id']);
-                $jadwal->hari = $itemJadwal['hari'];
-                $jadwal->jam_mulai = $itemJadwal['jam_mulai'];
-                $jadwal->jam_akhir = ($itemJadwal['jam_mulai'])+1;
-                $jadwal->save();
+            for($i=0; $i<count((array)request()->dataJadwal);$i++){
+                $itemJadwal = request()->dataJadwal[$i];
+                if($itemJadwal['id'] == "new"){
+                    JadwalKonselor::create([
+                        'hari' => $itemJadwal['hari'],
+                        'jam_mulai' => $itemJadwal['jam_mulai'],
+                        'jam_akhir' => $itemJadwal['jam_mulai']+1,
+                        'konselor_id'=> $konselor['id'],
+                        'available' => 'true'
+                    ]);
+                }else{
+                    $jadwal = JadwalKonselor::find($itemJadwal['id']);
+                    $jadwal->hari = $itemJadwal['hari'];
+                    $jadwal->jam_mulai = $itemJadwal['jam_mulai'];
+                    $jadwal->jam_akhir = ($itemJadwal['jam_mulai'])+1;
+                    $jadwal->save();
+                }
             }
+
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'message' => ''
+            ]);
+        }catch(Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
         }
-
-        return response()->json([
-            'success' => true,
-            'message' => ''
-        ]);
     }
-
 
     public function tambahKonselor(){
         $this->assignUser();
-        $konselorUser = User::create([
-            'name' => request()->personal['nama'],
-            'email' => request()->personal['email'],
-            'password' => bcrypt('siko'),
-            'role' => 'konselor',
-            'avatar' => 'default.jpg'
-        ]);
+        try{
+            DB::beginTransaction();
+            $konselorUser = User::create([
+                'name' => request()->personal['nama'],
+                'email' => request()->personal['email'],
+                'password' => bcrypt('siko'),
+                'role' => 'konselor',
+                'avatar' => $this->storeBase64(request()->personal['avatar']) ?? 'default.jpg'
+            ]);
 
-        $konselor = Konselor::create([
-            'nama_konselor' => request()->personal['nama'],
-            'profesi_konselor' => request()->personal['profesi'],
-            'email_konselor' => request()->personal['email'],
-            'no_hp_konselor' => request()->personal['nohp'],
-            'status' => 'aktif',
-            'user_id' => $konselorUser->id
-        ]);
+            $konselor = Konselor::create([
+                'nama_konselor' => request()->personal['nama'],
+                'profesi_konselor' => request()->personal['profesi'],
+                'email_konselor' => request()->personal['email'],
+                'no_hp_konselor' => request()->personal['nohp'],
+                'status' => 'aktif',
+                'user_id' => $konselorUser->id
+            ]);
 
-        for($i=0; $i<count((array)request()->dataJadwal);$i++){
-            $itemJadwal = request()->dataJadwal[$i];
-            if($itemJadwal['id'] == "new"){
-                JadwalKonselor::create([
-                    'hari' => $itemJadwal['hari'],
-                    'jam_mulai' => $itemJadwal['jam_mulai'],
-                    'jam_akhir' => $itemJadwal['jam_mulai']+1,
-                    'konselor_id'=> $konselor['id'],
-                    'available' => 'true'
-                ]);
-            }else{
-                $jadwal = JadwalKonselor::find($itemJadwal['id']);
-                $jadwal->hari = $itemJadwal['hari'];
-                $jadwal->jam_mulai = $itemJadwal['jam_mulai'];
-                $jadwal->jam_akhir = ($itemJadwal['jam_mulai'])+1;
-                $jadwal->save();
+            for($i=0; $i<count((array)request()->dataJadwal);$i++){
+                $itemJadwal = request()->dataJadwal[$i];
+                if($itemJadwal['id'] == "new"){
+                    JadwalKonselor::create([
+                        'hari' => $itemJadwal['hari'],
+                        'jam_mulai' => $itemJadwal['jam_mulai'],
+                        'jam_akhir' => $itemJadwal['jam_mulai']+1,
+                        'konselor_id'=> $konselor['id'],
+                        'available' => 'true'
+                    ]);
+                }else{
+                    $jadwal = JadwalKonselor::find($itemJadwal['id']);
+                    $jadwal->hari = $itemJadwal['hari'];
+                    $jadwal->jam_mulai = $itemJadwal['jam_mulai'];
+                    $jadwal->jam_akhir = ($itemJadwal['jam_mulai'])+1;
+                    $jadwal->save();
+                }
             }
+            DB::commit();
+            return response()->json([
+                'success' => true,
+                'data' =>$konselor
+            ]);
+        }catch(Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'success' => false,
+                'error' =>$e->getMessage()
+            ]);
         }
-        return response()->json([
-            'success' => true,
-            'data' =>$konselor
-        ]);
+
     }
 
 
@@ -383,6 +401,23 @@ class UserController extends Controller
             ]);
         }
 
+    }
+
+    public function resetPin(){
+        $this->assignUser();
+        $randomGeneratedPin = sprintf("%06d", mt_rand(1, 999999));
+        $user = User::find($this->user->id);
+        try{
+            // $notification = array(
+            //     'type' => 'reset_pin',
+            //     'title' => ''
+            // );
+            // Mail::to($user->email)->send(new NotifEmail($notification, $randomGeneratedPin, "Reset PIN"));
+            // $user->password = bcrypt($randomGeneratedPin);
+            // $user->save();
+        }catch(Exception $e){
+
+        }
     }
 
     public function gantiPin(){

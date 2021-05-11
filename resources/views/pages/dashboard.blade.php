@@ -6,7 +6,7 @@
 
     {{-- Dashboard 1 --}}
 
-    <div class="row">
+    <div class="row mt-8">
         <div class="col-lg-6 col-xxl-6">
             <div class="card border card-custom p-8 ">
                 <div class="d-flex align-items-center rounded-top">

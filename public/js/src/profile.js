@@ -45,7 +45,22 @@ $(document).ready(function(){
                 `
         })
     })
+    $('.loading-wrapper').empty();
     $('#jadwal-container').html(html);
+    $('#jadwal-container').show();
+    $('.button_tambah_jadwal').show();
+    $('[name="profile_avatar"]').change(function(){
+        console.log('on photo change')
+        var file = this.files[0];
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            $('#user_edit_avatar').css('background-image', 'url("' + reader.result + '")');
+        }
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+        }
+    })
 })
 
 function addNewJadwalElement(){
@@ -116,6 +131,7 @@ $('#button__profile-simpan').click(function(){
     toastr.info("Menyimpan Data");
     const dataJadwal = [];
     const personal = $('#form-personal').serializeObject();
+    personal.avatar = $('#user_edit_avatar').css("background-image");
     $.each($("select"), function(i,v){
         dataJadwal.push({
             id: $(this).data("value"),
@@ -148,9 +164,19 @@ $('#button__profile-simpan').click(function(){
             dataJadwal,
             personal
         }).then(res => {
-            profileSimpanLoading = false;
+            if(res.data.success){
+                Swal.fire("Sukses", "Data berhasil diubah", "success").then(res => {
+                    window.location.reload();
+                })
+            }else{
+                Swal.fire("Terjadi kesalahan", "Tidak dapat menyimpan perubahan "+res.data.error, "error");
+            }
+        }).catch((err) => {
+            Swal.fire("Terjadi kesalahan", "Tidak dapat menyimpan perubahan", "error");
+        })
+        .finally(() => {
             toastr.clear();
-            window.location.href = window.location.href
+            profileSimpanLoading = false;
         })
     }
 

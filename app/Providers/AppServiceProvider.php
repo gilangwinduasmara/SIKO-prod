@@ -83,19 +83,19 @@ class AppServiceProvider extends ServiceProvider
                 }
                 try{
                     if($notification->type != 'chat' && $notification->type != 'chat_conference'){
-                        if($user->role == 'konselor'){
-                            if($user->email == 'maria.nugraheni@uksw.edu'){
-                                Mail::to('nina.setiyawati@uksw.edu')->send(new NotifEmail($notification, $data, $subject));
-                            }else if($user->email == 'ones.dani@uksw.edu'){
-                                Mail::to('dwihosanna.bangkalang@uksw.edu')->send(new NotifEmail($notification, $data, $subject));
-                            }else{
-                                Mail::to('gilangwinduasmara2@gmail.com')->send(new NotifEmail($notification, $data, $subject));
-                            }
-                            foreach(['nina.setiyawati@uksw.edu', 'gilangwinduasmara2@gmail.com', 'dwihosanna.bangkalang@uksw.edu'] as $to){
-                            }
-                        }else{
-                            Mail::to($user->email)->send(new NotifEmail($notification, $data, $subject));
-                        }
+                        // if($user->role == 'konselor'){
+                        //     if($user->email == 'maria.nugraheni@uksw.edu'){
+                        //         Mail::to('nina.setiyawati@uksw.edu')->send(new NotifEmail($notification, $data, $subject));
+                        //     }else if($user->email == 'ones.dani@uksw.edu'){
+                        //         Mail::to('dwihosanna.bangkalang@uksw.edu')->send(new NotifEmail($notification, $data, $subject));
+                        //     }else{
+                        //         Mail::to('gilangwinduasmara2@gmail.com')->send(new NotifEmail($notification, $data, $subject));
+                        //     }
+                        //     foreach(['nina.setiyawati@uksw.edu', 'gilangwinduasmara2@gmail.com', 'dwihosanna.bangkalang@uksw.edu'] as $to){
+                        //     }
+                        // }else{
+                        //     Mail::to($user->email)->send(new NotifEmail($notification, $data, $subject));
+                        // }
                         Mail::to($user->email)->send(new NotifEmail($notification, $data, $subject));
                     }
                 }catch(Exception $e){

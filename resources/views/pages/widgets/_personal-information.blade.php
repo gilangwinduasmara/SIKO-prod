@@ -146,6 +146,9 @@
                 <div class="col-xl-3 col-sm-2 my-2">
                     <button {{$konseling->status_selesai == "C"?"disabled":""}} name={{"personal_information__rangkumankonseling"}} data-value={{$konseling->id}} href="#" class="btn btn-primary btn-xs font-size-xs btn-shadow-hover font-weight-bolder w-100 py-3">Rangkuman Konseling</button>
                 </div>
+                <div class="col-xl-3 col-sm-2 my-2">
+                    <button {{$konseling->status_selesai == "C"?"disabled":""}} name={{"personal_information__rangkumankonseling"}} data-value={{$konseling->id}} href="#" class="btn btn-primary btn-xs font-size-xs btn-shadow-hover font-weight-bolder w-100 py-3">Berkas</button>
+                </div>
             </div>
         </div>
     </div>

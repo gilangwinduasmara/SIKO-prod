@@ -5,7 +5,7 @@
 @section('content')
     @php($k = 's')
     {{-- Dashboard 1 --}}
-    <div class="container">
+    <div class="container mt-8">
         <!--begin::Chat-->
         @if(count($konselings) == 0)
             <div class="row w-100 justify-content-center align-items-center m-0 pt-24">

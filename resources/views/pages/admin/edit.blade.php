@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-    <div class="container">
+    <div class="container mt-8">
         <div class="row">
             <div class="col-xxl-12">
                 <div class="card card-custom">
@@ -13,6 +13,20 @@
                                 <h3 class="card-label">
                                     <span class="d-block text-dark font-weight-bolder">Informasi Personal</span>
                                 </h3>
+                                <div class="image-input image-input-empty image-input-outline" id="user_edit_avatar" style='background-image: url({{"/avatars/".($konselor->user->avatar ?? 'default.jpg')}})'>
+                                    <div class="image-input-wrapper"></div>
+                                    <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                        <i class="fa fa-pen icon-sm text-muted"></i>
+                                        <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
+                                        <input type="hidden" name="profile_avatar_remove">
+                                    </label>
+                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
+                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="" data-original-title="Remove avatar">
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
+                                </div>
                                 <div class="form-group">
                                     <label>Nama <span class="text-danger">*</span></label>
                                     <input value="{{$action == 'edit' ? $konselor->nama_konselor: ''}}" name="nama" class="form-control" />
@@ -95,6 +109,18 @@
     <script>
         $(document).ready(function(){
             let isLoading = false
+            $('[name="profile_avatar"]').change(function(){
+                console.log('on photo change')
+                var file = this.files[0];
+                var reader = new FileReader();
+                reader.onloadend = function () {
+                    $('#user_edit_avatar').css('background-image', 'url("' + reader.result + '")');
+                }
+                if (file) {
+                    reader.readAsDataURL(file);
+                } else {
+                }
+            })
             $('#button__konselor-simpan').click(function(){
                 if(isLoading){
                     return false
@@ -104,6 +130,7 @@
                 toastr.info("Menyimpan data...")
                 const dataJadwal = [];
                 const personal = $('#form-personal').serializeObject();
+                personal.avatar = $('#user_edit_avatar').css("background-image");
                 $.each($("select"), function(i,v){
                     dataJadwal.push({
                         id: $(this).data("value"),
@@ -140,7 +167,10 @@
 
                 @if($action == "create")
                 axios.post('/services/konselor/tambahKonselor', {personal, dataJadwal}).then(res=>{
-                    window.location.href="/admin/konselor";
+                    console.log(res.data);
+                    if(res.data.success){
+                        window.location.href="/admin/konselor";
+                    }
                 })
                 @else
                 axios.post('/services/user/edit',{
@@ -148,7 +178,16 @@
                     dataJadwal,
                     personal
                 }).then(res => {
-                    window.location.href = window.location.href
+                    if(res.data.success){
+                        Swal.fire("Sukses", "Data berhasil diubah", "success");
+                    }else{
+                        Swal.fire("Terjadi kesalahan", "Tidak dapat menyimpan perubahan", "error");
+                    }
+                }).catch((err) => {
+                    Swal.fire("Terjadi kesalahan", "Tidak dapat menyimpan perubahan", "error");
+                })
+                .finally(() => {
+                    isLoading = false;
                 })
                 @endif
             })

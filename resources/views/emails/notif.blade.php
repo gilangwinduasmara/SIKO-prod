@@ -38,6 +38,9 @@
         @case('invitation_conference')
             {{$notification->title. " mengundang conference"}}
             @break
+        @case('reset_pin')
+            {{"PIN anda telah direset, gunakan ".$data." untuk masuk ke dashboard konseling"}}
+            @break
         @default
     @endswitch
 </div>

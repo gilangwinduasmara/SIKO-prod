@@ -28,6 +28,8 @@ Route::middleware(['session'])->group(function(){
     Route::get('/profile', 'PagesController@profile');
     Route::get('/gantipassword', 'PagesController@gantiPassword');
 
+    Route::get('/files', 'PagesController@files');
+
 // Konselor routes
     Route::get('/daftarkonseli', 'PagesController@daftarkonseli');
     Route::get('/arsip', 'PagesController@arsip')->middleware('konseli');
@@ -77,6 +79,7 @@ Route::post('/services/konselor/editKonselor', 'UserController@editKonselor');
 Route::post('services/auth/login', 'UserController@login');
 Route::post('services/auth/pin', 'UserController@pin')->middleware('customthrottle:2,2');
 Route::post('services/auth/gantipin', 'UserController@gantiPin');
+Route::post('services/auth/reset-pin', 'UserController@resetPin');
 Route::post('services/auth/login/admin', 'UserController@adminLogin');
 Route::post('services/auth/register', 'UserController@register');
 Route::post('services/auth/siasat', 'UserController@siasatLogin');

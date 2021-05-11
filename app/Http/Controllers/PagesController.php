@@ -119,6 +119,31 @@ class PagesController extends Controller
         return view('pages.konselor.profile', compact('user', 'jadwal'));
     }
 
+    public function files(){
+        $this->assignUser();
+        $konselingId = request()->id;
+        $konseling = Konseling::with('files')->with('konselor')->with('konseli')->find($konselingId);
+        if($this->user->role == 'konseli'){
+            $konseling = Konseling::where('konseli_id',$this->user->details->id)->where('status_selesai','C')->where('refered','!=','ya')->with(['konselor' => function ($query){
+                $query->with('user')->get();
+            }])->with('jadwal')->with('files')->with('referal')->get()->first();
+
+            if($konseling == null){
+                return redirect('/dashboard');
+            }
+        }
+        if($this->user->role == 'konselor'){
+            if($konseling == null){
+                return redirect('/dashboard');
+            }
+            if($this->user->details->id != $konseling->konselor_id){
+                return redirect('/dashboard');
+            }
+        }
+        $user = $this->user;
+        return view('pages.files', compact('user', 'konseling'));
+    }
+
     public function daftarkonseli(){
         $this->assignUser();
         $user = $this->user;

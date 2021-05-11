@@ -57,6 +57,11 @@
                     <div class="text-danger text-center mt-2 error_confirm" style="display: none">PIN yang anda masukkan salah</div>
                     <div class="text-danger text-center mt-2 error_too_many_attemps" style="display: none">Terlalu banyak percobaan, coba beberapa saat lagi</div>
                 </div>
+                <div class="card-footer" >
+                    <div class="row justify-content-end">
+                        <button class="btn btn-primary reset-pin">Reset PIN</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -106,7 +111,6 @@
             }
             $('.error_confirm').hide();
         })
-
         $('.confirm').keyup(function(){
             if(!(/^\d+$/.test($(this).val()))){
                 $(this).val("")
@@ -153,6 +157,45 @@
     </script>
     @else
     <script>
+        $('.reset-pin').click(function(){
+            console.log('reset pin');
+            Swal.fire({
+                title: "Reset PIN",
+                text: "Anda yakin ingin mengubah PIN?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Ya",
+                cancelButtonText: "Batal",
+                reverseButtons: true
+            }).then(function(result) {
+                if (result.value) {
+                    axios.post('/services/auth/reset-pin').then((result) => {
+                        if(result.success){
+                            Swal.fire(
+                                "Reset PIN",
+                                "PIN telah dikirim ke email anda",
+                                "success"
+                            )
+                        }else{
+                            Swal.fire(
+                                "Terjadi kesalahan",
+                                "Silahkan coba lagi",
+                                "error"
+                            )
+                        }
+                    }).catch((err) => {
+                        Swal.fire(
+                            "Terjadi kesalahan",
+                            "Silahkan coba lagi",
+                            "error"
+                        )
+                    })
+
+                } else if (result.dismiss === "cancel") {
+
+                }
+            });
+        })
         function isBackspace(event){
             var key = event.keyCode || event.charCoed;
             console.log(event)

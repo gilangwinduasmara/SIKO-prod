@@ -50,6 +50,10 @@ class Konseling extends Model
     public function rangkumanKonseling(){
         return $this->hasOne('App\RangkumanKonseling');
     }
+
+    public function files(){
+        return $this->hasMany('App\File');
+    }
     // public function toArray(){
     //     $array = parent::toArray();
     //     $camelArray = array();

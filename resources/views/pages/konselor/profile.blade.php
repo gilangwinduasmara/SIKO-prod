@@ -3,7 +3,7 @@
 
 {{-- Content --}}
 @section('content')
-    <div class="container">
+    <div class="container mt-8">
         <div class="row">
             <div class="col-xxl-12">
                 <div class="card card-custom">
@@ -13,6 +13,20 @@
                                 <h3 class="card-label">
                                     <span class="d-block text-dark font-weight-bolder">Informasi Personal</span>
                                 </h3>
+                                <div class="image-input image-input-empty image-input-outline" id="user_edit_avatar" style='background-image: url({{"/avatars/".$user->avatar}})'>
+                                    <div class="image-input-wrapper"></div>
+                                    <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                                        <i class="fa fa-pen icon-sm text-muted"></i>
+                                        <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
+                                        <input type="hidden" name="profile_avatar_remove">
+                                    </label>
+                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
+                                    <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="" data-original-title="Remove avatar">
+                                        <i class="ki ki-bold-close icon-xs text-muted"></i>
+                                    </span>
+                                </div>
                                 <div class="form-group">
                                     <label>Nama <span class="text-danger">*</span></label>
                                     <input value="{{$user->details->nama_konselor}}" name="nama" class="form-control"/>
@@ -35,7 +49,10 @@
                                     <span class="d-block text-dark font-weight-bolder">Jadwal Online</span>
                                 </h3>
                                 <div>
-                                    <div class="row" id="jadwal-container">
+                                    <div class="loading-wrapper d-flex w-100 justify-content-center mt-8">
+                                        <div class="spinner spinner-solid text-align-center"></div>
+                                    </div>
+                                    <div class="row" id="jadwal-container" style="display: none">
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="exampleSelectd">Hari</label>
@@ -62,7 +79,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row justify-content-end pr-11">
+                                    <div class="row justify-content-end pr-11 button_tambah_jadwal" style="display: none">
                                         <button class="btn btn-light-warning" onclick="addNewJadwalElement()"><i class="ki ki-plus icon-sm"></i>Tambah Jadwal</button>
                                     </div>
                                 </div>

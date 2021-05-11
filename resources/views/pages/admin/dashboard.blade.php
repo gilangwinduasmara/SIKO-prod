@@ -2,7 +2,7 @@
 @extends('layout.default')
 
 @section('content')
-    <div class="row">
+    <div class="row mt-8">
         <div class="col-lg-6 col-xxl-6 mb-8">
             <div class="card border card-custom p-8 d-flex flex-column justify-content-center align-items-center">
                 <div>

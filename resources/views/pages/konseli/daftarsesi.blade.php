@@ -5,7 +5,7 @@
 @section('content')
     @php($k = 's')
     {{-- Dashboard 1 --}}
-    <div class="container">
+    <div class="container mt-8">
         <!--begin::Chat-->
         <div class="d-flex flex-row">
             <!--begin::Aside-->

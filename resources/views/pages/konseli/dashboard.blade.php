@@ -6,7 +6,7 @@
 
     {{-- Dashboard 1 --}}
     @php($konseli = $user->details)
-    <div class="row">
+    <div class="row mt-8">
         <div class="col">
             <div id={{"personal_information__"}} class="mt-8">
                 <div class="card border card-custom gutter-b">
@@ -101,6 +101,11 @@
                                             class="btn btn-warning btn-shadow-hover font-weight-bolder w-100 py-3">Close Case
                                     </button>
                                 </div>
+                                <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2 flex-grow-1">
+                                    <a href="/files"
+                                        class="btn btn-warning btn-shadow-hover font-weight-bolder w-100 py-3">Berkas
+                                    </a>
+                                </div>
                             </div>
                             @else
                             <div class="d-flex align-items-center flex-wrap mt-8">
@@ -122,6 +127,11 @@
                                     <button disabled href="#"
                                             class="btn btn-warning btn-shadow-hover font-weight-bolder w-100 py-3">Close Case
                                     </button>
+                                </div>
+                                <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2 flex-grow-1">
+                                    <a href="/files"
+                                        class="btn btn-warning btn-shadow-hover font-weight-bolder w-100 py-3">Berkas
+                                    </a>
                                 </div>
                             </div>
                         @endif

@@ -170,10 +170,10 @@
             }).then(function(result) {
                 if (result.value) {
                     axios.post('/services/auth/reset-pin').then((result) => {
-                        if(result.success){
+                        if(result.data.success){
                             Swal.fire(
                                 "Reset PIN",
-                                "PIN telah dikirim ke email anda",
+                                "PIN baru telah dikirim ke email anda",
                                 "success"
                             )
                         }else{

@@ -88,6 +88,8 @@ Route::post('services/auth/changepassword', 'UserController@changePassword');
 
 Route::get('services/jadwalkonselor', 'JadwalKonselorController@index');
 
+Route::post('services/file', 'FileController@create');
+Route::post('services/file/upload', 'FileController@upload');
 
 Route::get('services/konseling/statistic', 'KonselingController@statistic');
 Route::get('services/expired', 'KonselingController@checkExpired');

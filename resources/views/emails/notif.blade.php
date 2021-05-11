@@ -39,7 +39,7 @@
             {{$notification->title. " mengundang conference"}}
             @break
         @case('reset_pin')
-            {{"PIN anda telah direset, gunakan ".$data." untuk masuk ke dashboard konseling"}}
+            {{"PIN anda telah direset, gunakan ".$notification->data." untuk masuk ke dashboard konseling"}}
             @break
         @default
     @endswitch

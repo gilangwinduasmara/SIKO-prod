@@ -6,6 +6,7 @@ use App\JadwalKonselor;
 use App\Konseli;
 use App\Konselor;
 use App\Mail\NotifEmail;
+use App\Notification;
 use App\Setting;
 use App\User;
 use Illuminate\Support\Facades\Http;
@@ -19,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Mockery\Matcher\Not;
 
 class UserController extends Controller
 {
@@ -408,15 +410,27 @@ class UserController extends Controller
         $randomGeneratedPin = sprintf("%06d", mt_rand(1, 999999));
         $user = User::find($this->user->id);
         try{
+            Notification::create([
+                'type' => 'reset_pin',
+                'data' => $randomGeneratedPin,
+                'user_id' => $this->user->id
+            ]);
+            $user->password = bcrypt($randomGeneratedPin);
+            $user->save();
+            return response()->json([
+                'success' => true
+            ]);
             // $notification = array(
             //     'type' => 'reset_pin',
             //     'title' => ''
             // );
             // Mail::to($user->email)->send(new NotifEmail($notification, $randomGeneratedPin, "Reset PIN"));
-            // $user->password = bcrypt($randomGeneratedPin);
-            // $user->save();
-        }catch(Exception $e){
 
+        }catch(Exception $e){
+            return response()->json([
+                'success' => false,
+                'error' => $e->getMessage()
+            ]);
         }
     }
 

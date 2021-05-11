@@ -44,15 +44,17 @@ License: You must have a valid license purchased only from themeforest(the above
 
 
         {{-- Includable CSS --}}
+        {{-- <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pace-js@latest/pace-theme-default.min.css"> --}}
         <link rel="stylesheet" href="/css/app.css">
         @yield('styles')
     </head>
 
     <body {{ Metronic::printAttrs('body') }} {{ Metronic::printClasses('body') }}>
+        <div class="paceDiv"></div>
 
-
+        @include('layout.partials._page-loader')
         @if (config('layout.page-loader.type') != '')
-            @include('layout.partials._page-loader')
         @endif
         @include('layout.base._layout', [
             'header' => $header ?? true,

@@ -80,6 +80,10 @@ class AppServiceProvider extends ServiceProvider
                         $subject = "Undangan Case Conference";
                         $data = Konseling::with('konseli')->with('konselor')->find($notification->data);
                         break;
+                    case 'reset_pin':
+                        $subject = "Reset PIN";
+                        $data = $notification->data;
+                        break;
                 }
                 try{
                     if($notification->type != 'chat' && $notification->type != 'chat_conference'){

@@ -1,3 +1,14 @@
+Pace.on("start", function(){
+    console.log('pace start')
+    $("div.paceDiv").show();
+});
+
+Pace.on("done", function(){
+    console.log('pace done')
+    $("div.paceDiv").hide();
+});
+
+
 
 if(performance.navigation.type == 2){
     location.reload(true);

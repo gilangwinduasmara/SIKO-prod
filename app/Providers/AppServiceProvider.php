@@ -100,10 +100,11 @@ class AppServiceProvider extends ServiceProvider
                         // }else{
                         //     Mail::to($user->email)->send(new NotifEmail($notification, $data, $subject));
                         // }
+                        Log::info("send email to ".$user->email);
                         Mail::to($user->email)->send(new NotifEmail($notification, $data, $subject));
                     }
                 }catch(Exception $e){
-
+                    Log::error("email error: ".$e->getMessage());
                 }
 
             });

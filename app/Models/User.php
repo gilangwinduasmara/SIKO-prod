@@ -48,6 +48,15 @@ class User extends Authenticatable
         return $this->hasOne('App\Konselor');
     }
 
+    public function details(){
+        $user = $this;
+        if($user->info == 'konseli'){
+            return $this->hasOne('App\Konseli');
+        }else{
+            return $this->hasOne('App\Konselor');
+        }
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();

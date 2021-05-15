@@ -52,6 +52,11 @@ class User extends Authenticatable
     {
         return $this->getKey();
     }
+
+    public function name(){
+        return "my name";
+    }
+
     public function getJWTCustomClaims()
     {
         $user = $this;

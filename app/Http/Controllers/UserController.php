@@ -418,7 +418,8 @@ class UserController extends Controller
             $user->password = bcrypt($randomGeneratedPin);
             $user->save();
             return response()->json([
-                'success' => true
+                'success' => true,
+                'data' => $randomGeneratedPin
             ]);
             // $notification = array(
             //     'type' => 'reset_pin',

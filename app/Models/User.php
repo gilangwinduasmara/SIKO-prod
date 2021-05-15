@@ -6,6 +6,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
 
 class User extends Authenticatable
 // class User extends Authenticatable implements JWTSubject
@@ -49,8 +50,7 @@ class User extends Authenticatable
     }
 
     public function details(){
-        $user = $this;
-        if($user->info == 'konseli'){
+        if($this->role == 'konseli'){
             return $this->hasOne('App\Konseli');
         }else{
             return $this->hasOne('App\Konselor');

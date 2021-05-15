@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'PagesController@landing');
+// Route::get('/panduan', 'PagesController@panduan');
 Route::get('/pengumuman', 'PagesController@pengumuman');
 Route::get('/pengumuman/{id}', 'PagesController@pengumumanDetail');
 Route::get('/admin', 'AdminController@index');

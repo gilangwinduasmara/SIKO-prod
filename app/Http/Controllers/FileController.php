@@ -54,9 +54,11 @@ class FileController extends Controller
             'path' => 'uploads/'.request()->file_id,
             'user_id' => $this->user->id,
             'konseling_id' => $konseling->id,
-            'file_type' => explode('.', request()->file_id)[1],
+            'file_type' => strtolower(explode('.', request()->file_id)[1]),
             'file_size' => File::size(public_path('uploads/'.request()->file_id))
         ]);
+
+        return redirect()->back();
 
         return response()->json([
             'success' => true
@@ -74,7 +76,7 @@ class FileController extends Controller
           $extension = $request->file('file')->getClientOriginalExtension();
 
           // Valid extensions
-          $validextensions = array("jpeg","jpg","png","pdf");
+          $validextensions = array("jpeg","jpg","png","pdf", "gif", "svg");
 
           // Check extension
           if(in_array(strtolower($extension), $validextensions)){
@@ -91,9 +93,18 @@ class FileController extends Controller
                 'fileName' => $request->file('file')->getClientOriginalName(),
                 'fileId' => $fileName,
             ]);
+          }else{
+            return response()->json([
+                'success' => false,
+                'error' => 'Ekstensi file tidak diperbolehkan'
+            ]);
           }
 
         }
+        return response()->json([
+            'success' => false,
+            'error' => 'Silahkan coba lagi'
+        ]);
     }
 
     /**

@@ -122,7 +122,9 @@ class PagesController extends Controller
     public function files(){
         $this->assignUser();
         $konselingId = request()->id;
-        $konseling = Konseling::with('files')->with('konselor')->with('konseli')->find($konselingId);
+        $konseling = Konseling::with(['files' => function($query){
+            return $query->orderBy('created_at', 'DESC');
+        }])->with('konselor')->with('konseli')->find($konselingId);
         if($this->user->role == 'konseli'){
             $konseling = Konseling::where('konseli_id',$this->user->details->id)->where('status_selesai','C')->where('refered','!=','ya')->with(['konselor' => function ($query){
                 $query->with('user')->get();

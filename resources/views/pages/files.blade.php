@@ -1,5 +1,7 @@
 @extends('layout.default')
-
+@php
+    $imageExtensions = array("jpeg","jpg","png", "gif", "svg");
+@endphp
 @section('content')
    <div class="row justify-content-center py-8">
        {{-- <div class="col-xl-10">
@@ -32,22 +34,31 @@
                 </div>
             </div>
             <div class="card-body pt-2">
-                @foreach ($konseling->files as $file)
-                    <div class="d-flex flex-wrap align-items-center mb-10">
-                        <div class="symbol symbol-60 symbol-2by3 symbol-success flex-shrink-0">
-                            @if ($file->file_type == 'png')
-                                <div class="symbol-label" style="background-image: url('{{$file->path}}')"></div>
-                            @else
-                                <span class="symbol-label font-size-h5">{{$file->file_type}}</span>
-                            @endif
+                @if (count($konseling->files) == 0)
+                    <div class="text-center">Berkas masih kosong</div>
+                @else
+                    @foreach ($konseling->files as $file)
+                        <div class="d-flex flex-wrap align-items-center mb-10">
+                            <div class="symbol symbol-60 symbol-2by3 symbol-success flex-shrink-0">
+                                @if (in_array(strtolower($file->file_type), $imageExtensions))
+                                    <div class="symbol-label" style="background-image: url('{{$file->path}}')"></div>
+                                @else
+                                    <span class="symbol-label font-size-h5">{{$file->file_type}}</span>
+                                @endif
+                            </div>
+                            <div class="d-flex flex-column ml-4 flex-grow-1 mr-2">
+                                @if($file->user->role == 'konseli')
+                                    <a href="#" class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">{{$file->user->details->nama_konseli}}</a>
+                                    @else
+                                    <a href="#" class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">{{$file->user->details->nama_konselor}}</a>
+                                @endif
+                                <a href="#" class="text-dark-50 font-weight-bold text-hover-primary font-size-lg mb-1">{{$file->name.'.'.$file->file_type}}</a>
+                                <span class="text-muted font-weight-bold">{{$file->file_size/1000}} KB</span>
+                            </div>
+                            <a href="{{$file->path}}" download="{{$file->name.'.'.$file->file_type}}" class="btn btn-success">Unduh</a>
                         </div>
-                        <div class="d-flex flex-column ml-4 flex-grow-1 mr-2">
-                            <a href="#" class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">{{$file->name.'.'.$file->file_type}}</a>
-                            <span class="text-muted font-weight-bold">Ukuran: {{$file->file_size/1000}} KB</span>
-                        </div>
-                        <a href="{{$file->path}}" download="{{$file->name.'.'.$file->file_type}}" class="btn btn-success">Unduh</a>
-                    </div>
-                @endforeach
+                    @endforeach
+                @endif
             </div>
         </div>
      </div>
@@ -65,7 +76,7 @@
                     <div class="dropzone dropzone-default dropzone-success dz-clickable dz" >
                         <div class="dropzone-msg dz-message needsclick">
                             <h3 class="dropzone-msg-title">Seret berkas atau klik disini untuk mengunggah</h3>
-                            <span class="dropzone-msg-desc">Only image, pdf and psd files are allowed for upload</span>
+                            <span class="dropzone-msg-desc">Maksimal ukuran file: 2 MB (jpeg, jpg, png, pdf, gif, svg)</span>
                         </div>
                     </div>
                     <form id="form__confirm_upload" action="/services/file" method="POST" style="display: none">

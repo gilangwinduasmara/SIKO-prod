@@ -123,7 +123,9 @@ class PagesController extends Controller
         $this->assignUser();
         $konselingId = request()->id;
         $konseling = Konseling::with(['files' => function($query){
-            return $query->orderBy('created_at', 'DESC');
+            return $query->with(['user' => function($query){
+                return $query->with('details');
+            }])->orderBy('created_at', 'DESC');
         }])->with('konselor')->with('konseli')->find($konselingId);
         if($this->user->role == 'konseli'){
             $konseling = Konseling::where('konseli_id',$this->user->details->id)->where('status_selesai','C')->where('refered','!=','ya')->with(['konselor' => function ($query){
@@ -318,6 +320,12 @@ class PagesController extends Controller
         $user = $this->user;
         $konselors = Konselor::with('user')->get();
         return view('pages.landing.landing', compact('konselors', 'pengumuman', 'quotes', 'user'));
+    }
+
+    public function panduan(){
+        $this->assignUser();
+        $user = $this->user;
+        return view('pages.panduan', compact('user'));
     }
 
     public function conferenceSetup(Request $request){

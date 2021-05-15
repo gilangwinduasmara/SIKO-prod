@@ -204,7 +204,7 @@
                             <li class="d-sm-none d-lg-block"><a href="#pengumuman">Pengumuman</a></li>
                             <li class="d-sm-none d-lg-block"><a href="#layanan">Layanan</a></li>
                             <li class="d-sm-none d-lg-block"><a href="#konselor">Konselor</a></li>
-                            <li><a href="/panduan/Panduan User-Mahasiswa V2.0.pdf" target="_blank">Panduan</a></li>
+                            <li><a href="panduan">Panduan</a></li>
                             <li class="d-sm-none d-lg-block">
                                 @if($user)
                                 <a href="/dashboard" type="button" class="button px-8" style="height: 32px; background: rgb(78, 115, 223); color: white;">
@@ -227,7 +227,7 @@
                     <div class="mobile-logo">
                         <img src="/static/media/logo_baru.e44b41bb.svg" style="cursor: pointer; height: 50%">
                     </div>
-                    <a class="font-size-lg" style="color: #4e73df" href="/panduan/Panduan User-Mahasiswa V2.0.pdf" target="_blank">Panduan</a>
+                    <a href="panduan" class="font-size-lg" style="color: #4e73df">Panduan</a>
                     {{-- <nav class="">
                         <ul class="pb-0">
                             <li>
@@ -250,85 +250,14 @@
                         </ul>
                     </nav> --}}
                 </header>
-                <div>
-                    <div class="d-lg-none" style="margin-top: 200px"></div>
-                    <div class="vh-100 align-items-center row justify-content-around">
-                        <div class="col-xl-6 d-flex flex-column align-items-center">
-                            <div class="px-6" style="margin-top: -100px">
-                                <h1 class="display-2 font-weight-bolder">UKSW Peduli.</h1>
-                                <div class="h3">Konseling gratis oleh Campus Ministry. <br>Apapun yang menjadi
-                                    masalahmu, <br>dapatkan dukungan yang kamu butuhkan. <br>Saat ini juga, di Satya Wacana
-                                    Counseling.
-                                </div>
-                            </div>
-                            <div style="max-width: 170px" class="mt-8">
-                                @if($user)
-                                    <a href="/dashboard" type="button" class="button px-8" style="height: 32px; background: rgb(78, 115, 223); color: white;">
-                                        @if ($user->role == 'konseli')
-                                        {{$user->details->nim}}
-                                        @else
-                                        @if ($user->role == 'konselor')
-                                        {{explode(' ',($user->details->nama_konselor." "))[0]}}
-                                        @endif
-                                        @endif
-                                    </a>
-                                    @else
-                                    <button type="button"
-                                    class="button undefined"
-                                    value=""
-                                    style="width: 170px; background: rgb(78, 115, 223); color: white; height: 46px;" data-toggle="modal" data-target="#modal__login">Mulai Konseling</button>
-                                    @endif
-                            </div>
-                        </div>
-                        <div class="col-5 d-flex justify-content-center">
-                            <img style="height: 350px" src="/static/media/ilustrasi_landingpage.f3d0ad17.svg">
-                        </div>
-                    </div>
-                </div>
-                <div >
-                    <div class="pengunguman-flash" id="pengumuman">
-                        <div class="d-flex justify-content-end position-relative">
-                            <img class="ic-pengumuman" src="/static/media/landingpage_icon_pengumuman.8de94192.svg" alt="">
-                        </div>
-                        @if($pengumuman)
-                        <div class="pengunguman-wraper"
-                             style="display: flex; flex-direction: column; padding-top: 24px;">
-                            <div class="pengunguman-flash-title">{{$pengumuman->judul}}</div>
-                            <div class="pengunguman-flash-description">{{substr($pengumuman->isi, 0, 200)}}</div>
-                            <a href={{"/pengumuman?id=".$pengumuman->id}}>Lihat Selengkapnya</a></div>
-                        <div style="display: flex; justify-content: flex-end; width: 100%;">
-                            <div style="width: 300px;"><a href="/pengumuman" style="text-decoration: none;"><input
-                                        type="button" class="button undefined" value="Lihat semua pengumuman"
-                                        style="background: rgb(78, 115, 223); color: white; width: 170px; height: 46px;"></a>
-                            </div>
-                        </div>
-                        @else
-                        <div class="pengunguman-wraper" style="display: flex; flex-direction: column; padding-top: 24px; width: 100%">
-                            <div class="pengunguman-flash-title">Belum ada pengumuman</div>
-                            <div style="display: flex; justify-content: flex-end; width: 100%;">
-                            <div style="width: 300px;">
-                            </div>
-                        </div>
-                        @endif
-                    </div>
-                </div>
-
                 <div id="layanan">
                     <div class="row p-6">
-                        <div class="col-lg-4">
-                            <div class="col-6">
-                                <img src="/static/media/ilustrasi_landingpage_layanan.7d0edf05.svg" style="height: 320px;">
-                            </div>
-                        </div>
                         <div class="col-lg-8">
                             <div class="" >
-                                <div class="display-4">
-                                    Layanan
-                                </div>
                                 <div class="display-4 font-weight-bolder">
-                                    Satya Wacana Counseling <br>selalu siap membantumu..
+                                    Panduan
                                 </div>
-                                <div class="w-80 d-flex justify-content-center">
+                                <div class="w-80 ">
                                     <div class="yellow-bar"></div>
                                 </div>
                             </div>
@@ -369,44 +298,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div id="konselor" style="margin-top: 50px">
-                    <div class="landing-section container-section mt-50" style="background-color: rgb(25, 43, 69);">
-                        <div class="section-title" style="color: white;">Daftar Konselor</div>
-                        <div class="yellow-bar"></div>
-                        <div class="conselors-section">
-                            <div class="owl-carousel owl-theme">
-                                @foreach($konselors as $konselor)
-                                    <div class="conselors-list-card">
-                                        <div class="conselors-list-avatar"><img
-                                                src={{"/avatars/".$konselor->user->avatar}}>
-                                        </div>
-                                        <div class="conselors-list-name text-center">{{$konselor->nama_konselor}}
-                                        </div>
-                                        <div class="conselors-list-profesion text-center">{{$konselor->profesi_konselor}}
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="quote" class="d-flex flex-column align-items-center py-8">
-                    <div>
-                        <img src="/static/media/quote_icon.2e2034c9.svg" alt="">
-                    </div>
-                    <div class="text-center text-slide-container d-flex h4" >
-                        @foreach ($quotes as $quote)
-                            <div class="text-slide-item" style="height: 200px; overflow: hidden; width: 100vw">
-                                <div class="my-24" style="color: #192b45; max-width: 100vw">
-                                    {{$quote->quote}}
-                                </div>
-                                <div class="" style="color: #192b45">
-                                    {{"-".$quote->oleh}}
-                                </div>
-                            </div>
-                        @endforeach
                     </div>
                 </div>
                 <div class="footer py-8" style="color: white; background: rgb(25, 43, 69);">

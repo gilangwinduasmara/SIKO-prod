@@ -123,16 +123,16 @@ class PagesController extends Controller
         $this->assignUser();
         $konselingId = request()->id;
         $konseling = Konseling::with(['files' => function($query){
-            return $query->with(['user' => function($query){
-                return $query->with('details');
-            }])->orderBy('created_at', 'DESC');
+            return $query->with('user')->orderBy('created_at', 'DESC');
         }])->with('konselor')->with('konseli')->find($konselingId);
         if($this->user->role == 'konseli'){
             $konseling = Konseling::where('konseli_id',$this->user->details->id)->where('status_selesai','C')->where('refered','!=','ya')->with(['konselor' => function ($query){
                 $query->with(['user' => function($query){
                     return $query->with('details');
                 }])->get();
-            }])->with('jadwal')->with('files')->with('referal')->get()->first();
+            }])->with('jadwal')->with(['files' => function($query){
+                return $query->with('user')->orderBy('created_at', 'DESC');
+            }])->with('referal')->get()->first();
 
             if($konseling == null){
                 return redirect('/dashboard');
@@ -147,6 +147,13 @@ class PagesController extends Controller
             }
         }
         $user = $this->user;
+        foreach($konseling->files as &$file){
+            if($file->user->role == 'konseli'){
+                $file->uploaded_by = Konseli::where('user_id', $file->user->id)->first()->nama_konseli;
+            }else{
+                $file->uploaded_by = Konselor::where('user_id', $file->user->id)->first()->nama_konselor;
+            }
+        }
         return view('pages.files', compact('user', 'konseling'));
     }
 

@@ -47,15 +47,23 @@
                                 @endif
                             </div>
                             <div class="d-flex flex-column ml-4 flex-grow-1 mr-2">
-                                @if($file->user->role == 'konseli')
-                                    <a href="#" class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">{{$file->user->details->nama_konseli}}</a>
-                                    @else
-                                    <a href="#" class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">{{$file->user->details->nama_konselor}}</a>
-                                @endif
+                                <a href="#" class="text-dark-75 font-weight-bold text-hover-primary font-size-lg mb-1">{{$file->uploaded_by}}</a>
                                 <a href="#" class="text-dark-50 font-weight-bold text-hover-primary font-size-lg mb-1">{{$file->name.'.'.$file->file_type}}</a>
-                                <span class="text-muted font-weight-bold">{{$file->file_size/1000}} KB</span>
+                                <span class="text-muted font-weight-bold">{{ \Carbon\Carbon::parse($file->created_at)->diffForhumans() }} &bull; {{$file->file_size/1000}} KB</span>
                             </div>
-                            <a href="{{$file->path}}" download="{{$file->name.'.'.$file->file_type}}" class="btn btn-success">Unduh</a>
+                            <div class="d-flex flex-grow-1 justify-content-end">
+                                @if ($user->id == $file->user->id)
+                                    <div>
+                                        <a href="{{$file->path}}" download="{{$file->name.'.'.$file->file_type}}" class="btn btn-warning">Edit</a>
+                                    </div>
+                                    <div class="mx-4">
+                                        <a href="{{$file->path}}" download="{{$file->name.'.'.$file->file_type}}" style="background: #f64d60; border-color: #f64d60" class="btn btn-danger">Hapus</a>
+                                    </div>
+                                @endif
+                                <div>
+                                    <a href="{{$file->path}}" download="{{$file->name.'.'.$file->file_type}}" class="btn btn-success">Unduh</a>
+                                </div>
+                            </div>
                         </div>
                     @endforeach
                 @endif
@@ -63,6 +71,7 @@
         </div>
      </div>
    </div>
+   {{$konseling}}
    <div class="modal fade" id="modal__upload" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
         <div class="modal-dialog bd-example-modal-lgbd-example-modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">

@@ -71,7 +71,6 @@
         </div>
      </div>
    </div>
-   {{$konseling}}
    <div class="modal fade" id="modal__upload" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
         <div class="modal-dialog bd-example-modal-lgbd-example-modal-lg modal-dialog-centered" role="document">
             <div class="modal-content">

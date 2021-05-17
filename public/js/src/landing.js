@@ -192,6 +192,18 @@ $(document).ready(function(){
                 toastr.options = conf.toastr.options.saving;
                 toastr.error(response.data.message, "Login gagal!")
             }
+        }).catch( err => {
+            console.log(err.response)
+            if(err.response?.status === 419){
+                Swal.fire({
+                    'title': 'Terjadi kesalahan',
+                    'text': 'Form anda telah kadaluarsa silahkan coba lagi',
+                }).then((result) => {
+                    if(result.value){
+                        window.location.href ="/";
+                    }
+                })
+            }
         });
     });
 

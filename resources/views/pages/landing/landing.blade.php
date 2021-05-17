@@ -29,7 +29,7 @@
     <link rel="stylesheet" href="/css/app.css">
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <script>
-            let userId = {{Session::get('userId')}};
+            let userId = {{Session::get('userId')??null}};
         </script>
         @foreach (Metronic::initThemes() as $theme)
             <link href="{{ config('layout.self.rtl') ? asset(Metronic::rtlCssPath($theme)) : asset($theme) }}" rel="stylesheet" type="text/css"/>

@@ -5,6 +5,7 @@ namespace App\Console;
 use App\CaseConference;
 use App\JadwalKonselor;
 use App\Konseling;
+use App\Notification;
 use App\Setting;
 use App\User;
 use Carbon\Carbon;
@@ -34,41 +35,62 @@ class Kernel extends ConsoleKernel
         $schedule->call(function (){
             // $konselings = Konseling::whereDate('tgl_daftar_konseling', '>', 'tgl_expired_konseling')->get();
             $candidates = [];
-            $konselings = Konseling::with('chats')->get();
-            $setting = Setting::get()->first();
-            foreach($konselings as $konseling){
-                $lastchat = null;
-                foreach($konseling->chats as $chat){
-                    $userChat = User::find($chat->userID);
-                    if($userChat->role == 'konseli'){
-                        $lastchat = $userChat;
-                        break;
-                    }
+        $konselings = Konseling::with('konseli')->with('konselor')->with('chats')->get();
+        $setting = Setting::get()->first();
+        foreach($konselings as $konseling){
+            $lastchat = null;
+            foreach($konseling->chats as $chat){
+                $userChat = User::find($chat->userID);
+                if($userChat->role == 'konseli'){
+                    $lastchat = $userChat;
+                    break;
                 }
-                if($lastchat){
-                    $tgl_last_activity = Carbon::createFromFormat("Y-m-d",Carbon::parse($lastchat->created_at)->toDateString(),'Asia/Jakarta');
-                }else{
-                    $tgl_last_activity = $konseling->created_at;
+            }
+            if($lastchat){
+                $tgl_last_activity = Carbon::createFromFormat("Y-m-d",Carbon::parse($lastchat->created_at)->toDateString(),'Asia/Jakarta');
+            }else{
+                $tgl_last_activity = $konseling->created_at;
+            }
+
+
+            if($konseling->status_selesai == "C" && $konseling->refered == "tidak"){
+                if($konseling->konseli->nim){
+                    // dd($tgl_last_activity->diffInDays(now(), false));
                 }
+                // dd("682017048");
+                $tgl_daftar = Carbon::createFromFormat('Y-m-d', $konseling->tgl_daftar_konseling);
+                if($tgl_last_activity->diffInDays(now(), false)>=$setting->expired){
+                    array_push($candidates, $konseling);
+
+                    $notification = Notification::create([
+                        "type" => "end_konseling",
+                        "data" => $konseling->id,
+                        'title' => $konseling->konseli->nama_konseli,
+                        "message" => "Sesi konseling kadaluarsa",
+                        "user_id" => $konseling->konselor->user_id
+                    ]);
+                    $notification = Notification::create([
+                        "type" => "end_konseling",
+                        "data" => $konseling->id,
+                        'title' => $konseling->konselor->nama_konselor,
+                        "message" => "Sesi konseling kadaluarsa",
+                        "user_id" => $konseling->konseli->user_id
+                    ]);
 
 
-                if($konseling->status_selesai == "C" && $konseling->refered == "tidak"){
-                    $tgl_daftar = Carbon::createFromFormat('Y-m-d', $konseling->tgl_daftar_konseling);
-                    if($konseling->created_at->diffInDays(now(), false)>$setting->expired){
-                        array_push($candidates, $konseling);
-                        $konseling->status_selesai = 'expired';
-                        $konseling->save();
-                        $jadwal = JadwalKonselor::find($konseling->jadwal_konselor_id);
-                        $jadwal->save();
-
-                        $conference = CaseConference::where('konseling_id', $konseling->id)->where('status','on-going')->first();
-                        if($conference){
-                            $conference->status = 'selesai';
-                            $conference->save();
-                        }
+                    $konseling->status_selesai = 'expired';
+                    $konseling->save();
+                    $jadwal = JadwalKonselor::find($konseling->jadwal_konselor_id);
+                    $jadwal->save();
+                    // kevin -> 682017048
+                    $conferences = CaseConference::where('konseling_id', $konseling->id)->where('status','on-going')->get();
+                    foreach($conferences as $conference){
+                        $conference->status = 'selesai';
+                        $conference->save();
                     }
                 }
             }
+        }
         })->everyMinute();
     }
 

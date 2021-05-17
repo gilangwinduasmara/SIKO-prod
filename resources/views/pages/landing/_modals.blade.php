@@ -76,15 +76,15 @@
                             </div>
 
                             <div class="form-group">
-                                <label>NIM <span class="text-danger">*</span></label>
+                                <label>NIM/NIP <span class="text-danger">*</span></label>
                                 <input name="nim" id="input__nim" type="text" class="form-control" readonly/>
                             </div>
                             <div class="form-group">
-                                <label>Fakultas <span class="text-danger">*</span></label>
+                                <label>Fakultas/Unit <span class="text-danger">*</span></label>
                                 <input name="fakultas" id="input__fakultas" type="text" class="form-control" readonly/>
                             </div>
                             <div class="form-group">
-                                <label>Prodi <span class="text-danger">*</span></label>
+                                <label>Prodi/Unit <span class="text-danger">*</span></label>
                                 <input name="progdi" id="input__prodi" type="text" class="form-control" readonly/>
                             </div>
                             <div class="form-group">

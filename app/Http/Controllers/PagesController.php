@@ -206,6 +206,11 @@ class PagesController extends Controller
         // dd($konselis);
         return view('pages.konselor.daftarkonseli', compact('page_title', 'page_description', 'konselings', 'showChat', 'type', 'user'));
     }
+    public function konselingOffline(){
+        $this->assignUser();
+        $user = $this->user;
+        return view('pages.konselor.konselingoffline', compact('user'));
+    }
 
     public function gantiJadwal(){
         $this->assignUser();

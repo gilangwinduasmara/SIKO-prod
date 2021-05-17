@@ -161,6 +161,7 @@ class FileController extends Controller
     public function destroy($id)
     {
         $file = AppFile::find($id);
+        $file->delete();
         return response()->json([
             'success' => true
         ]);

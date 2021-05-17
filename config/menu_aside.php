@@ -19,6 +19,13 @@ return [
                 'new-tab' => false,
             ],
             [
+                'title' => 'Konseling Offline',
+                'root' => true,
+                'icon' => 'flaticon-users', // or can be 'flaticon-home' or any flaticon-*
+                'page' => '/konseling-offline',
+                'new-tab' => false,
+            ],
+            [
                 'title' => 'Case Conference',
                 'root' => true,
                 'icon' => 'flaticon2-group', // or can be 'flaticon-home' or any flaticon-*
@@ -62,6 +69,13 @@ return [
                     'root' => true,
                     'icon' => 'flaticon-user-settings', // or can be 'flaticon-home' or any flaticon-*
                     'page' => '/admin/konselor',
+                    'new-tab' => false,
+                ],
+                [
+                    'title' => 'Konseling Offline',
+                    'root' => true,
+                    'icon' => 'flaticon-user-settings', // or can be 'flaticon-home' or any flaticon-*
+                    'page' => '/admin/konseling-offline',
                     'new-tab' => false,
                 ],
                 [

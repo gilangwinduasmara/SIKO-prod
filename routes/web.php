@@ -33,6 +33,7 @@ Route::middleware(['session'])->group(function(){
 
 // Konselor routes
     Route::get('/daftarkonseli', 'PagesController@daftarkonseli');
+    Route::get('/konseling-offline', 'PagesController@konselingOffline');
     Route::get('/arsip', 'PagesController@arsip')->middleware('konseli');
     Route::get('/caseconference', 'PagesController@caseconference');
 
@@ -51,6 +52,7 @@ Route::middleware(['session'])->group(function(){
     Route::get('/admin/report', 'AdminController@report');
     Route::get('/admin/setting', 'AdminController@setting');
     Route::get('/admin/informasi', 'AdminController@informasi');
+    Route::get('/admin/konseling-offline', 'PagesController@konselingOffline');
     Route::get('/admin/konselor/tambah', 'AdminController@tambahKonselor');
     Route::get('/admin/konselor/edit/{id}', 'AdminController@editKonselor');
     Route::post('/admin/post', 'AdminController@doLogin');
@@ -90,6 +92,7 @@ Route::post('services/auth/changepassword', 'UserController@changePassword');
 Route::get('services/jadwalkonselor', 'JadwalKonselorController@index');
 
 Route::post('services/file', 'FileController@create');
+Route::delete('services/file/{id}', 'FileController@destroy');
 Route::post('services/file/upload', 'FileController@upload');
 
 Route::get('services/konseling/statistic', 'KonselingController@statistic');
@@ -158,3 +161,6 @@ Route::post('/services/quote', 'QuoteController@store');
 Route::delete('/services/quote/{id}', 'QuoteController@destroy');
 
 Route::get('/services/tes', 'PagesController@tes');
+
+Route::get('/services/konselingoffline', 'KonselingOfflineController@index');
+Route::post('/services/konselingoffline', 'KonselingOfflineController@store')->middleware('sanitizer');

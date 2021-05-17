@@ -53,11 +53,11 @@
                             </div>
                             <div class="d-flex flex-grow-1 justify-content-end">
                                 @if ($user->id == $file->user->id)
-                                    <div>
-                                        <a href="{{$file->path}}" download="{{$file->name.'.'.$file->file_type}}" class="btn btn-warning">Edit</a>
-                                    </div>
+                                    {{-- <div>
+                                        <button data-toggle="edit_file" data-id="{{$file->id}}"class="btn btn-primary">Sunting</button>
+                                    </div> --}}
                                     <div class="mx-4">
-                                        <a href="{{$file->path}}" download="{{$file->name.'.'.$file->file_type}}" style="background: #f64d60; border-color: #f64d60" class="btn btn-danger">Hapus</a>
+                                        <button data-toggle="delete_file" data-id="{{$file->id}}" style="background: #f64d60; border-color: #f64d60" class="btn btn-danger">Hapus</button>
                                     </div>
                                 @endif
                                 <div>
@@ -170,6 +170,23 @@
                 $('#button__upload').attr('disabled', true)
                 $('#form__confirm_upload').submit();
             });
+            $('[data-toggle="delete_file"]').click(function(){
+                const fileId = $(this).data('id')
+                Swal.fire({
+                    title: 'Hapus file',
+                    text: 'Anda yakin ingin menghapus file?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal"
+                }).then((result) => {
+                    if(result.value){
+                        axios.delete('services/file/'+fileId).then((res) => {
+                            window.location.reload();
+                        })
+                    }
+                })
+            })
         })
     </script>
 @endsection

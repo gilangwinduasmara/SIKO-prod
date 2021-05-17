@@ -11,13 +11,16 @@
                             {{-- <span class="text-muted font-weight-bold font-size-sm">More than 400+ new members</span> --}}
                         </h3>
                         <div class="card-toolbar">
-                            <button class="btn btn-light-primary" data-target="#modal__create_konseling_offline" data-toggle="modal">Konseling Baru</button>
+                            @if ($user->role == 'konselor')
+                                <button class="btn btn-light-primary" data-target="#modal__create_konseling_offline" data-toggle="modal">Konseling Baru</button>
+                            @endif
                         </div>
                     </div>
                     <div class="card-body pt-2">
                         <div class="d-flex justify-content-center mt-12">
                             <div class="spinner" id="spinner_wrapper"></div>
                         </div>
+                        <div class="text-center" id="konseling_offline__empty_state" style="display: none">Belum ada konseling offline</div>
                         <div class="table-responsive">
                             <table class="table table-borderless mb-0">
                                 <tbody id="konseling_offlines_wrapper">
@@ -153,6 +156,9 @@
             let konseling_offlines = await axios.get('/services/konselingoffline').then()
             $('#spinner_wrapper').hide();
             const konseling_offlines_wrapper = $('#konseling_offlines_wrapper')
+            if(konseling_offlines.data.data.length == 0){
+                $('#konseling_offline__empty_state').show();
+            }
             konseling_offlines.data.data.map((konseling_offline) => {
                 konseling_offlines_wrapper.append(`
                     <tr>

@@ -147,9 +147,13 @@ class FileController extends Controller
      * @param  \App\Models\File  $file
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, File $file)
+    public function update(Request $request, $id)
     {
-        //
+        $this->assignUser();
+        $file = AppFile::where('user_id', $this->user->id)->where('id', $id)->first();
+        $file->name = $request->edit_file_name;
+        $file->save();
+        return redirect()->back();
     }
 
     /**

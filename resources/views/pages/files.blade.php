@@ -53,9 +53,9 @@
                             </div>
                             <div class="d-flex flex-grow-1 justify-content-end">
                                 @if ($user->id == $file->user->id)
-                                    {{-- <div>
-                                        <button data-toggle="edit_file" data-id="{{$file->id}}"class="btn btn-primary">Sunting</button>
-                                    </div> --}}
+                                    <div>
+                                        <button data-toggle="edit_file" data-id="{{$file->id}}" data-file_name="{{$file->name}}" class="btn btn-primary">Sunting</button>
+                                    </div>
                                     <div class="mx-4">
                                         <button data-toggle="delete_file" data-id="{{$file->id}}" style="background: #f64d60; border-color: #f64d60" class="btn btn-danger">Hapus</button>
                                     </div>
@@ -102,6 +102,32 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
                 </div>
+            </div>
+        </div>
+    </div>
+   <div class="modal fade" id="modal__edit_file" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal-dialog bd-example-modal-lgbd-example-modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="exampleModalLabel">Sunting berkas</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <i aria-hidden="true" class="ki ki-close"></i>
+                    </button>
+                </div>
+                <form id="form__edit_file" action="/services/file" method="POST" style="display: none">
+                    <input type="hidden" name="_method" value="put" />
+                    <div class="modal-body" >
+                        @csrf
+                        <input name="file_id" type="text" class="form-control" value="" hidden>
+                        <div class="form-group mt-8">
+                            <label for="">Nama file</label>
+                            <input name="edit_file_name" type="text" class="form-control" value="">
+                        </div>
+                    </div>
+                    <div class="modal-footer b-0">
+                        <button type="submit" class="btn btn-light-primary font-weight-bold">Simpan</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
@@ -186,6 +212,15 @@
                         })
                     }
                 })
+            })
+            $('[data-toggle="edit_file"]').click(function(){
+                $('#form__edit_file').hide()
+                const fileId = $(this).data('id')
+                const fileName = $(this).data('file_name')
+                $('#form__edit_file').show()
+                $('#form__edit_file').attr('action', '/services/file/'+fileId)
+                $('[name="edit_file_name"]').val(fileName)
+                $('#modal__edit_file').modal('show')
             })
         })
     </script>

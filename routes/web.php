@@ -93,6 +93,7 @@ Route::get('services/jadwalkonselor', 'JadwalKonselorController@index');
 
 Route::post('services/file', 'FileController@create');
 Route::delete('services/file/{id}', 'FileController@destroy');
+Route::put('services/file/{id}', 'FileController@update');
 Route::post('services/file/upload', 'FileController@upload');
 
 Route::get('services/konseling/statistic', 'KonselingController@statistic');

@@ -315,7 +315,9 @@ class PagesController extends Controller
         $konseling_referred = Konseling::with(['konselor'=>function($query){
             $query->with('user');
         }])->with(['referral' => function ($query){
-                            $query->with('konselor')->get();
+                            $query->with('konselor')->with(['referredFrom' => function($query){
+                                $query->with('konselor');
+                            }])->get();
                         }])->with('rangkumanKonseling')->with(['konseli' => function ($query) {
                             $query->with('user');
                         }])->with(['chats' => function ($query) {

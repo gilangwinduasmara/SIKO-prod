@@ -54,7 +54,7 @@ $(document).ready(function(){
 
     // $('#modal__persetujuan').modal('show')
 
-    $('#button__lanjut').click(function(){
+    $('#button__lanjut').click(function(e){
         let error = false
         if($('#select__gender').val() == ""){
             $('#select__gender + span').text("Jenis kelamin belum dipilih")
@@ -111,8 +111,10 @@ $(document).ready(function(){
             $('#input__tanggallahir + span').text("")
         }
 
-        if(error)
+        if(error){
+            e.preventDefault()
             return false;
+        }
 
         $('#if__nama').text('   : '+$('#input__name').val())
         $('#if__jk').text('   : '+$('#select__gender').val()).val();
@@ -187,6 +189,9 @@ $(document).ready(function(){
                     $('#input__prodi').val(data.progdi);
                     $('#input__fakultas').val(data.fakultas);
                     $('#input__email').val(data.email);
+                    if(data.isStaff){
+                        $('#email__wrapper').show();
+                    }
                 }
             }else{
                 toastr.clear()
@@ -194,7 +199,6 @@ $(document).ready(function(){
                 toastr.error(response.data.message, "Login gagal!")
             }
         }).catch( err => {
-            console.log(err.response)
             if(err.response?.status === 419){
                 Swal.fire({
                     'title': 'Terjadi kesalahan',
@@ -222,8 +226,6 @@ $(document).ready(function(){
                 $('#modal__login').modal('show');
                 $('#modal__register').modal('hide');
                 $('#modal__persetujuan').modal('hide');
-            }else{
-
             }
         }).catch(err => {
             if(err.response?.status === 419){
@@ -235,6 +237,19 @@ $(document).ready(function(){
                         window.location.href ="/";
                     }
                 })
+            }else{
+                $('#modal__register').modal('show');
+                $('#modal__persetujuan').modal('hide');
+                if(err.response?.data?.message){
+                    Object.keys(err.response.data.message).map((key) => {
+                        toastr.clear()
+                        err.response.data.message[key].map((message) => {
+                            toastr.warning(message)
+                        })
+                    })
+                }else{
+                    toastr.warning('Terjadi kesalahan, periksa form dan coba lagi')
+                }
             }
         });
 

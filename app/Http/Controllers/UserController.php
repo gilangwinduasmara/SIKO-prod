@@ -581,6 +581,7 @@ class UserController extends Controller
             'agama' => 'required'
         ], [
             "required" => ":attribute belum diisi",
+            "unique" => ":attribute sudah digunakan"
         ]);
 
         if ($validator->fails()) {

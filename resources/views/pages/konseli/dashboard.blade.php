@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2 flex-grow-1">
                                     <button
-                                        disabled href=""} class="btn
+                                        disabled href="" class="btn
                                         btn-warning btn-shadow-hover font-weight-bolder w-100 py-3">Case Conference</button>
                                 </div>
                                 <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2 flex-grow-1">
@@ -129,8 +129,8 @@
                                     </button>
                                 </div>
                                 <div class="d-flex align-items-center flex-lg-fill mr-5 mb-2 flex-grow-1">
-                                    <a href="/files"
-                                        class="btn btn-warning btn-shadow-hover font-weight-bolder w-100 py-3">Berkas
+                                    <a disabled href="#"
+                                        class="btn btn-warning btn-shadow-hover font-weight-bolder w-100 py-3 disabled">Berkas
                                     </a>
                                 </div>
                             </div>

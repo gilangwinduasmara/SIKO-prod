@@ -204,7 +204,7 @@
                             <li class="d-sm-none d-lg-block"><a href="#pengumuman">Pengumuman</a></li>
                             <li class="d-sm-none d-lg-block"><a href="#layanan">Layanan</a></li>
                             <li class="d-sm-none d-lg-block"><a href="#konselor">Konselor</a></li>
-                            <li><a href="/panduan/Panduan User-Mahasiswa V2.0.pdf" target="_blank">Panduan</a></li>
+                            <li><a href="/panduan/Panduan Konseli V3.0.pdf" target="_blank">Panduan</a></li>
                             <li class="d-sm-none d-lg-block">
                                 @if($user)
                                 <a href="/dashboard" type="button" class="button px-8" style="height: 32px; background: rgb(78, 115, 223); color: white;">
@@ -227,7 +227,7 @@
                     <div class="mobile-logo">
                         <img src="/static/media/logo_baru.e44b41bb.svg" style="cursor: pointer; height: 50%">
                     </div>
-                    <a class="font-size-lg" style="color: #4e73df" href="/panduan/Panduan User-Mahasiswa V2.0.pdf" target="_blank">Panduan</a>
+                    <a class="font-size-lg" style="color: #4e73df" href="/panduan/Panduan Konseli V3.0.pdf" target="_blank">Panduan</a>
                     {{-- <nav class="">
                         <ul class="pb-0">
                             <li>

@@ -137,7 +137,10 @@
                                     <option value="Teman" id="">Teman</option>
                                 </select>
                             </div>
-                            <input name="email" type="email" hidden id="input__email">
+                            <div id="email__wrapper" class="form-group" style="display: none">
+                                <label>Email<span class="text-danger">*</span></label>
+                                <input name="email" type="email" id="input__email" class="form-control">
+                            </div>
                         </div>
                     </div>
                     <input class="btn btn-warning" value="Simpan" type="submit" hidden>

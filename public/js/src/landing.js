@@ -170,7 +170,8 @@ $(document).ready(function(){
         e.preventDefault();
         toastr.options = conf.toastr.options.saving;
         toastr.info("Sedang memproses data")
-        const url = state.selectedRole === 'konselor' ? '/services/auth/login' : '/services/auth/siasat';
+        const subRoleUrl = $('#radio__m').is(':checked') ? '/services/auth/siasat':'/services/auth/staff'
+        const url = state.selectedRole === 'konselor' ? '/services/auth/login' : subRoleUrl;
         axios.post(url, $(this).serialize()).then((response) => {
             if(response.data.success){
                 if(response.data.action !== 'register'){

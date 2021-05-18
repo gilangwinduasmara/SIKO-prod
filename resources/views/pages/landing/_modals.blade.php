@@ -160,7 +160,7 @@
                 <div class="row justify-content-center radio-role">
                     <div class="col-3">
                         <div class="form-check">
-                            <input class="form-check-input shadow" type="radio" name="exampleRadios" id="radio__m" value="n" checked>
+                            <input class="form-check-input shadow" type="radio" name="konseli_sub_role" id="radio__m" value="m" checked>
                             <label class="form-check-label" for="exampleRadios1">
                               Mahasiswa
                             </label>
@@ -168,7 +168,7 @@
                     </div>
                     <div class="col-4">
                         <div class="form-check">
-                            <input disabled class="form-check-input shadow" type="radio" name="exampleRadios" id="radio__d" value="m">
+                            <input class="form-check-input shadow" type="radio" name="konseli_sub_role" id="radio__d" value="s">
                             <label class="form-check-label" for="exampleRadios2">
                                 Dosen / Pegawai
                             </label>

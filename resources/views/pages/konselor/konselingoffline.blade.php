@@ -23,6 +23,13 @@
                         <div class="text-center" id="konseling_offline__empty_state" style="display: none">Belum ada konseling offline</div>
                         <div class="table-responsive">
                             <table class="table table-borderless mb-0">
+                                <thead>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>1</td>
+                                        <td>1</td>
+                                    </tr>
+                                </thead>
                                 <tbody id="konseling_offlines_wrapper">
                                     {{-- <tr>
                                         <td class="align-middle w-50px pl-0 pr-2 pb-6">
@@ -149,6 +156,7 @@
 @endsection
 
 @section("scripts")
+    <script src="/plugins/custom/datatables/datatables.bundle.js" type="text/javascript"></script>
     <script>
         var isKonselingOfflineLoading = true;
         async function getKonselingOfflines(){
@@ -190,6 +198,8 @@
                     </tr>
                 `)
             })
+            $('table').DataTable()
+
             $('.button__open_detail').click(function(){
                 $('[name="detail_topik"]').val($(this).data('topik'))
                 $('[name="detail_rekam_konseling"]').val($(this).data('rekam_konseling'))

@@ -316,7 +316,62 @@ class UserController extends Controller
         }
     }
 
+    public function staffLogin(Request $request){
+        $headers = [
+            'Authorization' => 'Bearer q-3Ecy-01WRvmbVAY5Atn0HLB_gyXWDgk3aIX45CNuACA_8BslktroLRbHfC4Fu82Um3VRvhzpbPjvUKp3OJsZAs2kf180XetBEBq4UNi2Cuu3wvJDf90OFdqgYfcelzy9XHdHanW4E9d1athocSq0dAie8ynOVZFRQUF5ItXPOVhdpA1ZXbBUaQQuJCeADHEEeLlTfriq65HlA_Jx7UCuHTG_bVhO2u_w8Tlqg42ks9vLQOYCF_yFeGG4kn2OgBBEGUAMdJllt8AgZ4aAN0Z_15jWt1V4xDIUlD8-etzizTUKOKBrMClwgUII67OFet',
+            'Content-Type' => 'application/json'
+        ];
 
+        $credentials = [
+            'nip' => $request->email,
+            'pwd' => $request->password
+        ];
+
+        $client = new client();
+        $response = $client->get('https://outsideservice.uksw.edu/pegawaiapi/api/LoginPegawai', [
+            'headers' => $headers,
+            'json' => $credentials,
+        ]);
+
+        $result = json_decode((string) $response->getBody(), true);
+
+        if($result['metadata']){
+            if($result['metadata']['code'] == '200'){
+                $user = User::where('email',$result['response']['nip'].'@siko.com')->first();
+                $konseli = Konseli::where('nim', $result['response']['nip'])->first();
+                if($konseli){
+                    session()->put('userId', $user->id);
+                    session()->save();
+                    $user = User::find($konseli->user_id);
+                    $x = $this->konseliLogin($user->email, 'siko');
+                    $x->original['action'] = 'login';
+                    return response()->json($x->original);
+                }else{
+                    $data = array(
+                        'nim' => $result['response']['nip'],
+                        'nama' => $result['response']['nama'],
+                        'fakultas' => $result['response']['unit'],
+                        'progdi' => $result['response']['unit'],
+                        'email' => $result['response']['nip'].'@siko.com',
+                        'nohp' => $result['response']['nama'],
+                        'isStaff' => true
+                    );
+                    return response()->json([
+                        'success' => true,
+                        'error' => false,
+                        'message' => '',
+                        'data' => $data,
+                        'action' => 'register'
+                    ]);
+                }
+            }
+        }
+
+        return response()->json([
+            'error' => true,
+            'message' => 'NIP atau password salah',
+        ]);
+    }
 
     public function siasatLogin(Request $request){
         $nim = 672018200;

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Route::get('/staff-test', '');
 Route::get('/', 'PagesController@landing');
 // Route::get('/panduan', 'PagesController@panduan');
 Route::get('/pengumuman', 'PagesController@pengumuman');
@@ -86,6 +87,7 @@ Route::post('services/auth/reset-pin', 'UserController@resetPin');
 Route::post('services/auth/login/admin', 'UserController@adminLogin');
 Route::post('services/auth/register', 'UserController@register');
 Route::post('services/auth/siasat', 'UserController@siasatLogin');
+Route::post('services/auth/staff', 'UserController@staffLogin');
 Route::post('services/auth/changepassword', 'UserController@changePassword');
 
 

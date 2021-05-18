@@ -356,6 +356,12 @@ class UserController extends Controller
                         'nohp' => $result['response']['nama'],
                         'isStaff' => true
                     );
+                    session()->put('nim', $data['nim']);
+                    session()->put('fakultas', $data['fakultas']);
+                    session()->put('progdi', $data['progdi']);
+                    session()->put('email', $data['email']);
+                    session()->put('isStaff', $data['isStaff']);
+                    session()->save();
                     return response()->json([
                         'success' => true,
                         'error' => false,
@@ -406,6 +412,11 @@ class UserController extends Controller
                     "error" => true
                 ]);
             }else{
+                session()->put('nim', $mahasiswa['nim']);
+                session()->put('fakultas', $mahasiswa['fakultas']);
+                session()->put('progdi', $mahasiswa['progdi']);
+                session()->put('email', $mahasiswa['email']);
+                session()->put('isStaff', false);
 
                 return response()->json([
                     'success' => true,
@@ -581,6 +592,10 @@ class UserController extends Controller
 
         $password = $request->password;
         $input = $request->all();
+        $input['nim'] = session()->get('nim');
+        $input['fakultas'] = session()->get('fakultas');
+        $input['progdi'] = session()->get('progdi');
+        $input['email'] = session()->get('email');
         $input['password'] = bcrypt('siko');
         $input['prodi_id'] = 1;
         $input['role'] = 'konseli';

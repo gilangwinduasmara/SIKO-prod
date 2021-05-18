@@ -135,6 +135,7 @@
                                     <option value="Ibu" id="">Ibu</option>
                                     <option value="Saudara" id="">Saudara</option>
                                     <option value="Teman" id="">Teman</option>
+                                    <option value="Pasangan" id="">Pasangan</option>
                                 </select>
                             </div>
                             <div id="email__wrapper" class="form-group" style="display: none">

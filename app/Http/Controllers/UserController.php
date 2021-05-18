@@ -337,10 +337,10 @@ class UserController extends Controller
 
         if($result['metadata']){
             if($result['metadata']['code'] == '200'){
-                $user = User::where('email',$result['response']['nip'].'@siko.com')->first();
+                // $user = User::where('email',$result['response']['nip'].'@siko.com')->first();
                 $konseli = Konseli::where('nim', $result['response']['nip'])->first();
                 if($konseli){
-                    session()->put('userId', $user->id);
+                    session()->put('userId', $konseli->user_id);
                     session()->save();
                     $user = User::find($konseli->user_id);
                     $x = $this->konseliLogin($user->email, 'siko');
@@ -359,7 +359,7 @@ class UserController extends Controller
                     session()->put('nim', $data['nim']);
                     session()->put('fakultas', $data['fakultas']);
                     session()->put('progdi', $data['progdi']);
-                    session()->put('email', $data['email']);
+                    session()->put('email', '');
                     session()->put('isStaff', $data['isStaff']);
                     session()->save();
                     return response()->json([
@@ -380,8 +380,6 @@ class UserController extends Controller
     }
 
     public function siasatLogin(Request $request){
-        $nim = 672018200;
-        $password = 814413;
         $nim = $request->email;
         $password = $request->password;
         $http = new Client;

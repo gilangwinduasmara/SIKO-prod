@@ -352,7 +352,7 @@ class UserController extends Controller
                         'nama' => $result['response']['nama'],
                         'fakultas' => $result['response']['unit'],
                         'progdi' => $result['response']['unit'],
-                        'email' => $result['response']['nip'].'@siko.com',
+                        'email' => '',
                         'nohp' => $result['response']['nama'],
                         'isStaff' => true
                     );

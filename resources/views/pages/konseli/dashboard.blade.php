@@ -250,9 +250,9 @@
     <script>
         var konseling = @json($konseling);
     </script>
-    <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/dropdown.js') }}" type="text/javascript"></script>
-    <script src="{{asset('js/src/app.js')}}"></script>
+    <script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/dropdown.js') }}" type="text/javascript"></script>
+    <script src="{{assetVersion('js/src/app.js')}}"></script>
     <script>
         $(document).ready(function(){
             $("#"+window.location.href.split("#")[1]).modal('show');

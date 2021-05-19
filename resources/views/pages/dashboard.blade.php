@@ -105,7 +105,7 @@
 
 {{-- Scripts Section --}}
 @section('scripts')
-    <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/dropdown.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/session.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/dropdown.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/session.js') }}" type="text/javascript"></script>
 @endsection

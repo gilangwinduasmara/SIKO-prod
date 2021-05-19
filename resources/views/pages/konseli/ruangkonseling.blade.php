@@ -157,13 +157,13 @@
         var user = @json($user);
         var selectedKonseling = selectedKonselingDetail.id;
     </script>
-    <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/dropdown.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/list.js') }}" type="text/javascript"></script>
-{{--    <script src="{{ asset('js/src/personalinformation.js') }}" type="text/javascript"></script>--}}
-    <script src="{{ asset('js/src/app.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/chat.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/dropdown.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/list.js') }}" type="text/javascript"></script>
+{{--    <script src="{{ assetVersion('js/src/personalinformation.js') }}" type="text/javascript"></script>--}}
+    <script src="{{ assetVersion('js/src/app.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/chat.js') }}" type="text/javascript"></script>
     <script>
         showChat();
     </script>

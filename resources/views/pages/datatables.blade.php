@@ -693,16 +693,16 @@
 
 {{-- Styles Section --}}
 @section('styles')
-    <link href="{{ asset('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css"/>
+    <link href="{{ assetVersion('plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet" type="text/css"/>
 @endsection
 
 
 {{-- Scripts Section --}}
 @section('scripts')
     {{-- vendors --}}
-    <script src="{{ asset('plugins/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('plugins/custom/datatables/datatables.bundle.js') }}" type="text/javascript"></script>
 
     {{-- page scripts --}}
-    <script src="{{ asset('js/pages/crud/datatables/basic/basic.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/crud/datatables/basic/basic.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/app.js') }}" type="text/javascript"></script>
 @endsection

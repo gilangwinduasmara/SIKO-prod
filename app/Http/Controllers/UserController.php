@@ -89,6 +89,30 @@ class UserController extends Controller
         ]);
     }
 
+    public function clean(){
+        $users = User::where('role', 'konseli')->get();
+        $cleaned = 0;
+        $errors = 0;
+
+        foreach($users as $user){
+            try{
+                $konseli = Konseli::where('user_id', $user->id)->get();
+                if(count($konseli)>0){
+                   continue;
+                }
+                $user->delete();
+                $cleaned++;
+            }catch(Exception $e){
+                $errors++;
+            }
+        }
+        return response()->json([
+            'cleaned' => $cleaned,
+            'error' => $errors,
+            'ok' => true
+        ]);
+    }
+
     public function editProfile(){
         $this->assignUser();
         $user = $this->user;
@@ -316,9 +340,28 @@ class UserController extends Controller
         }
     }
 
-    public function staffLogin(Request $request){
+    private function getToken(){
+        $client = new client();
         $headers = [
-            'Authorization' => 'Bearer q-3Ecy-01WRvmbVAY5Atn0HLB_gyXWDgk3aIX45CNuACA_8BslktroLRbHfC4Fu82Um3VRvhzpbPjvUKp3OJsZAs2kf180XetBEBq4UNi2Cuu3wvJDf90OFdqgYfcelzy9XHdHanW4E9d1athocSq0dAie8ynOVZFRQUF5ItXPOVhdpA1ZXbBUaQQuJCeADHEEeLlTfriq65HlA_Jx7UCuHTG_bVhO2u_w8Tlqg42ks9vLQOYCF_yFeGG4kn2OgBBEGUAMdJllt8AgZ4aAN0Z_15jWt1V4xDIUlD8-etzizTUKOKBrMClwgUII67OFet',
+            'Content-Type' => 'application/x-www-form-urlencoded'
+        ];
+        $response = $client->get('https://outsideservice.uksw.edu/pegawaiapi/token', [
+            'headers' => $headers,
+            'form_params' => [
+                'username' => 'personaUKSW',
+                'grant_type' => 'password',
+                'password' => 'ukj1neu'
+            ],
+        ]);
+        $result = json_decode((string) $response->getBody(), true);
+        return $result['access_token'];
+        // return response()->json($result);
+    }
+
+    public function staffLogin(Request $request){
+        $token = $this->getToken();
+        $headers = [
+            'Authorization' => 'Bearer '.$token,
             'Content-Type' => 'application/json'
         ];
 
@@ -353,7 +396,7 @@ class UserController extends Controller
                         'fakultas' => $result['response']['unit'],
                         'progdi' => $result['response']['unit'],
                         'email' => '',
-                        'nohp' => $result['response']['nama'],
+                        'nohp' => $result['response']['nohp'],
                         'isStaff' => true
                     );
                     session()->put('nim', $data['nim']);
@@ -599,16 +642,24 @@ class UserController extends Controller
         $input['prodi_id'] = 1;
         $input['role'] = 'konseli';
         $input['avatar'] = 'default.jpg';
-        $user = User::create($input);
-        $input['user_id'] = $user->id;
-        //todo: user dulu!
-        //konseli
-        $konseli = Konseli::create($input);
+        try{
+            DB::beginTransaction();
+            $user = User::create($input);
+            $input['user_id'] = $user->id;
+            $konseli = Konseli::create($input);
 
-        if($request->avatar != null){
-            $avatar = $this->storeBase64($request->avatar);
-            $user->avatar = $avatar;
-            $user->save();
+            if($request->avatar != null){
+                $avatar = $this->storeBase64($request->avatar);
+                $user->avatar = $avatar;
+                $user->save();
+            }
+            DB::commit();
+        }catch(Exception $e){
+            DB::rollBack();
+            return response()->json([
+                'success'=>false,
+                'message'=>'',
+            ]);
         }
 
 //        session()->put('userId', $user->id);

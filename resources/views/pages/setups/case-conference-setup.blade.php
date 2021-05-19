@@ -165,12 +165,12 @@
     <script>
         var konselors = @json($konselors);
     </script>
-    <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/dropdown.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/list.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/setup.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/app.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/dropdown.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/list.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/setup.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/app.js') }}" type="text/javascript"></script>
     <script>
         $("#input__judul_case").keyup(function(){
             if($(this).val().length == 0){

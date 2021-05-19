@@ -81,12 +81,12 @@
         {{--var selectedKonselingDetail = konselings[0];--}}
         {{--var selectedKonseling = konselings[0].id;--}}
     </script>
-    <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/dropdown.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/list.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/personalinformation.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/app.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/dropdown.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/list.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/personalinformation.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/app.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
             $("#table_list").on("click", 'a[name="list-konselor"]', function(){

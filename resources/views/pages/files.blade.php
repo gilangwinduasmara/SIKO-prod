@@ -136,9 +136,9 @@
 
 {{-- Scripts Section --}}
 @section('scripts')
-    <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/dropdown.js') }}" type="text/javascript"></script>
-    <script src="{{asset('js/src/app.js')}}"></script>
+    <script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/dropdown.js') }}" type="text/javascript"></script>
+    <script src="{{assetVersion('js/src/app.js')}}"></script>
     <script>
         var CSRF_TOKEN = "{{ csrf_token() }}"
         let dz = null;

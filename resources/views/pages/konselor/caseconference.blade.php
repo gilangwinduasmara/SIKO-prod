@@ -228,12 +228,12 @@
         var selectedCaseconference = null;
         // var selectedCaseconference = caseconferences[0];
     </script>
-    <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/dropdown.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/list.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/caseconferenceinformation.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/app.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/chatgroup.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/dropdown.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/list.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/caseconferenceinformation.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/app.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/chatgroup.js') }}" type="text/javascript"></script>
 
 @endsection

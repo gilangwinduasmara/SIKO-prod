@@ -36,6 +36,10 @@ class KonselingOfflineController extends Controller
         ]);
     }
 
+    public function dt(){
+        // Data
+    }
+
     /**
      * Show the form for creating a new resource.
      *

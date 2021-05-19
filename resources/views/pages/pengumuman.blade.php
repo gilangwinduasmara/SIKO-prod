@@ -239,10 +239,10 @@
     var KTAppSettings = {!! json_encode(config('layout.js'), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES) !!};
 </script>
 @foreach(config('layout.resources.js') as $script)
-    <script src="{{ asset($script) }}" type="text/javascript"></script>
+    <script src="{{ assetVersion($script) }}" type="text/javascript"></script>
 @endforeach
-<script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
+<script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
 <script src="/js/owl.carousel.js" type="text/javascript"></script>
 <script src="/js/src/config.js" type="text/javascript"></script>
-<script src="/js/src/landing.js" type="text/javascript"></script>
-<script src="{{ asset('js/pages/features/miscellaneous/toastr.js') }}" type="text/javascript"></script>
+<script src="{{assetVersion('/js/src/landing.js')}}" type="text/javascript"></script>
+<script src="{{ assetVersion('js/pages/features/miscellaneous/toastr.js') }}" type="text/javascript"></script>

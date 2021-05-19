@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 // Route::get('/staff-test', '');
+Route::get('/clean', 'UserController@clean');
+Route::get('/tes', 'UserController@getToken');
 Route::get('/', 'PagesController@landing');
 // Route::get('/panduan', 'PagesController@panduan');
 Route::get('/pengumuman', 'PagesController@pengumuman');
@@ -35,6 +37,7 @@ Route::middleware(['session'])->group(function(){
 // Konselor routes
     Route::get('/daftarkonseli', 'PagesController@daftarkonseli');
     Route::get('/konseling-offline', 'PagesController@konselingOffline');
+
     Route::get('/arsip', 'PagesController@arsip')->middleware('konseli');
     Route::get('/caseconference', 'PagesController@caseconference');
 

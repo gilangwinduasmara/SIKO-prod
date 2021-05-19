@@ -102,10 +102,10 @@
         var user = @json($user);
         var jadwal = @json($jadwal ?? []);
     </script>
-    <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/app.js') }}" type="text/javascript"></script>
-    <script src="{{ asset('js/src/profile.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/custom/chat/chat.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/app.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/src/profile.js') }}" type="text/javascript"></script>
     <script>
         $(document).ready(function(){
             let isLoading = false

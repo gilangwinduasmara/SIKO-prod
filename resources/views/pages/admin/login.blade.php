@@ -25,7 +25,7 @@
 @endsection
 
 @section('scripts')
-    <script src="{{ asset('js/pages/widgets.js') }}" type="text/javascript"></script>
+    <script src="{{ assetVersion('js/pages/widgets.js') }}" type="text/javascript"></script>
     <script>
         $('.header').hide();
         $('#form__admin_login').submit(function(e){

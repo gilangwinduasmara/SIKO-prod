@@ -5,10 +5,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <link rel="icon" href="/browser-icon.ico">
+    <link rel="icon" href="/media/logos/favicon.ico">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="theme-color" content="#000000">
-    <meta name="description" content="Web site created using create-react-app">
+    <meta name="description" content="Konseling gratis oleh Campus Ministry. Apapun yang menjadi
+    masalahmu, dapatkan dukungan yang kamu butuhkan. Saat ini juga, di Satya Wacana
+    Counseling.">
     <link crossorigin=""
           href="https://fonts.googleapis.com/css2?family=Hind+Vadodara:wght@300;400;500;600;700&amp;display=swap"
           rel="stylesheet">

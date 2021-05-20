@@ -40,7 +40,7 @@ class KonselingOfflineController extends Controller
 
     public function dt(){
         $this->assignUser();
-        $konseling = DB::table('konseling_offlines');
+        $konseling = KonselingOffline::with('konselor');
         if($this->user->role == 'konseli'){
             return response()->json([
                 'success' => false,

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Konseling;
 use App\KonselingOffline;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class KonselingOfflineController extends Controller
 {
@@ -37,7 +39,26 @@ class KonselingOfflineController extends Controller
     }
 
     public function dt(){
-        // Data
+        $this->assignUser();
+        $konseling = DB::table('konseling_offlines');
+        if($this->user->role == 'konseli'){
+            return response()->json([
+                'success' => false,
+                'error' => 'Wait a minute, who are you?'
+            ]);
+        }
+        if($this->user->role == 'konselor'){
+            $konseling->where('konselor_id', $this->user->details->id);
+        }
+        $startDate = request()->get('from');
+        $endDate = request()->get('to');
+
+        if($startDate && $endDate){
+            $konseling->whereDate('waktu', '>=', date('Y-m-d', strtotime($startDate)))->whereDate('waktu', '<=', date('Y-m-d', strtotime($endDate)));
+        }
+
+        $data = $konseling->get();
+        return datatables($data)->toJson();
     }
 
     /**
@@ -104,9 +125,20 @@ class KonselingOfflineController extends Controller
      * @param  \App\Models\KonselingOffline  $konselingOffline
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, KonselingOffline $konselingOffline)
+    public function update($id)
     {
-        //
+        $this->assignUser();
+        $konselingOffline = KonselingOffline::where('konselor_id', $this->user->details->id)->where('id', $id)->first();
+        $konselingOffline->nama_konseli = request()->nama_konseli;
+        $konselingOffline->tempat = request()->tempat;
+        $konselingOffline->waktu = request()->waktu;
+        $konselingOffline->topik = request()->topik;
+        $konselingOffline->rekam_konseling = request()->rekam_konseling;
+        $konselingOffline->rumusan_masalah = request()->rumusan_masalah;
+        $konselingOffline->treatment = request()->treatment;
+        $konselingOffline->konselor_id = $this->user->details->id;
+        $konselingOffline->save();
+        return redirect()->back();
     }
 
     /**

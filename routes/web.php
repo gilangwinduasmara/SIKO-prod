@@ -169,4 +169,6 @@ Route::delete('/services/quote/{id}', 'QuoteController@destroy');
 Route::get('/services/tes', 'PagesController@tes');
 
 Route::get('/services/konselingoffline', 'KonselingOfflineController@index');
+Route::get('/services/konselingoffline/dt', 'KonselingOfflineController@dt');
 Route::post('/services/konselingoffline', 'KonselingOfflineController@store')->middleware('sanitizer');
+Route::put('/services/konselingoffline/{id}', 'KonselingOfflineController@update')->middleware('sanitizer');

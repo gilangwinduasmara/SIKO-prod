@@ -637,7 +637,7 @@ class UserController extends Controller
         $input['nim'] = session()->get('nim');
         $input['fakultas'] = session()->get('fakultas');
         $input['progdi'] = session()->get('progdi');
-        $input['email'] = session()->get('email');
+        // $input['email'] = session()->get('email');
         $input['password'] = bcrypt('siko');
         $input['prodi_id'] = 1;
         $input['role'] = 'konseli';

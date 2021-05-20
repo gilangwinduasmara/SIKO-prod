@@ -161,7 +161,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-
+        Yajra\DataTables\DataTablesServiceProvider::class,
         /*
          * Package Service Providers...
          */
@@ -231,7 +231,7 @@ return [
         // Metronic Aliases
         'Metronic' => App\Classes\Theme\Metronic::class,
         'Menu' => App\Classes\Theme\Menu::class,
-
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 ];

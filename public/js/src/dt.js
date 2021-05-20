@@ -3,7 +3,18 @@
         dom: 'Bfrtip',
         buttons: [
             // 'copy', 'csv', 'excel', 'pdf', 'print'
-            'excel', 'pdf', 'print'
+            {
+                extend: 'excel',
+                title: documentTitle
+            },
+            {
+                extend: 'pdf',
+                title: documentTitle+' \nSatya Wacana Counseling'
+            },
+            {
+                extend: 'print',
+                title: documentTitle+' \nSatya Wacana Counseling'
+            },
         ],
         columnDefs: [
             {

@@ -32,6 +32,7 @@
     <script src="{{ assetVersion('/js/src/dt.js') }}" type="text/javascript"></script>
     <script src="{{assetVersion('/js/src/session.js')}}"></script>
     <script>
+        const documentTitle = "{{request()->detail ? 'Daftar Detail Konseling' : 'Daftar Absensi Konseling'}}"
         $(document).ready(function(){
 
             $('#datepicker_dari').datepicker({

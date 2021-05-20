@@ -61,7 +61,11 @@
                             <table class="table table-separate table-head-custom table-checkable">
                                 <thead>
                                     <tr>
-                                        <td>Konseli</td>
+                                        @if($user->role == 'admin')
+                                            <td>Konselor</td>
+                                            @else
+                                            <td>Konseli</td>
+                                        @endif
                                         <td>Unit Asal</td>
                                         <td>Tempat</td>
                                         <td>Waktu</td>
@@ -309,14 +313,24 @@
             //         </tr>
             //     `)
             // })
-
             table = $('table').DataTable({
                 processing: true,
                 serverSide: true,
                 dom: 'Bfrtip',
                 buttons: [
                     // 'copy', 'csv', 'excel', 'pdf', 'print'
-                    'excel', 'pdf', 'print'
+                    {
+                        extend: 'excel',
+                        title: 'Daftar Absensi Konseling Offline'
+                    },
+                    {
+                        extend: 'pdf',
+                        title: 'Daftar Absensi Konseling Offline \nSatya Wacana Counseling'
+                    },
+                    {
+                        extend: 'print',
+                        title: 'Daftar Absensi Konseling Offline \nSatya Wacana Counseling'
+                    },
                 ],
                 ajax: {
                     url: '/services/konselingoffline/dt',
@@ -327,7 +341,13 @@
                     }
                 },
                 columns: [
-                    { data: 'nama_konseli', name: 'nama_konseli' },
+                    <?php
+                        if($user->role == 'admin'){
+                            echo ("{ data: 'konselor.nama_konselor', name: 'konselor.nama_konselor' },");
+                        }else{
+                            echo ("{ data: 'nama_konseli', name: 'nama_konseli' },");
+                        }
+                    ?>
                     { data: 'unit_asal_konseli', name: 'unit_asal_konseli' },
                     { data: 'tempat', name: 'tempat' },
                     { data: 'waktu', name: 'waktu' },

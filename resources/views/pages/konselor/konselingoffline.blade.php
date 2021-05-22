@@ -62,11 +62,12 @@
                                 <thead>
                                     <tr>
                                         @if($user->role == 'admin')
+                                            <td>ID Konseling</td>
                                             <td>Konselor</td>
                                             @else
                                             <td>Konseli</td>
                                         @endif
-                                        <td>Unit Asal</td>
+                                        <td>Unit Asal Konseli</td>
                                         <td>Tempat</td>
                                         <td>Waktu</td>
                                         <td></td>
@@ -317,6 +318,7 @@
                 processing: true,
                 serverSide: true,
                 dom: 'Bfrtip',
+                order: [[0, 'desc']],
                 buttons: [
                     // 'copy', 'csv', 'excel', 'pdf', 'print'
                     {
@@ -343,7 +345,7 @@
                 columns: [
                     <?php
                         if($user->role == 'admin'){
-                            echo ("{ data: 'konselor.nama_konselor', name: 'konselor.nama_konselor' },");
+                            echo ("{ data: 'id', name: 'id' },{ data: 'konselor.nama_konselor', name: 'konselor.nama_konselor' },");
                         }else{
                             echo ("{ data: 'nama_konseli', name: 'nama_konseli' },");
                         }

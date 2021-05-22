@@ -28,7 +28,7 @@
                     @endif
                     Berkas</h3>
                 <div class="card-toolbar">
-                    {{!!$konseling!!}}
+                    {{-- {{!!$konseling!!}} --}}
                     @if ($konseling->status_selesai == 'C' && $konseling->refered != 'ya')
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal__upload">
                             Unggah berkas

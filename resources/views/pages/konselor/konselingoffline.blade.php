@@ -335,11 +335,12 @@
                     },
                 ],
                 ajax: {
-                    url: '/services/konselingoffline/dt/',
-                    type: 'GET',
+                    url: '/services/konselingoffline/dt',
+                    type: 'POST',
                     data: function (d) {
                         d.from = $('#datepicker_dari').val();
                         d.to = $('#datepicker_sampai').val();
+                        d._token = "{{csrf_token()}}"
                     }
                 },
                 columns: [

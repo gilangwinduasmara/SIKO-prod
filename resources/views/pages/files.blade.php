@@ -28,12 +28,16 @@
                     @endif
                     Berkas</h3>
                 <div class="card-toolbar">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal__upload">
-                        Unggah berkas
-                    </button>
+                    {{!!$konseling!!}}
+                    @if ($konseling->status_selesai == 'C')
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal__upload">
+                            Unggah berkas
+                        </button>
+                    @endif
                 </div>
             </div>
             <div class="card-body pt-2">
+                {{-- {{!! $konseling !!}} --}}
                 @if (count($konseling->files) == 0)
                     <div class="text-center">Berkas masih kosong</div>
                 @else
@@ -52,13 +56,15 @@
                                 <span class="text-muted font-weight-bold">{{ \Carbon\Carbon::parse($file->created_at)->diffForhumans() }} &bull; {{$file->file_size/1000}} KB</span>
                             </div>
                             <div class="d-flex flex-grow-1 justify-content-end">
-                                @if ($user->id == $file->user->id)
-                                    <div>
-                                        <button data-toggle="edit_file" data-id="{{$file->id}}" data-file_name="{{$file->name}}" class="btn btn-primary">Sunting</button>
-                                    </div>
-                                    <div class="mx-4">
-                                        <button data-toggle="delete_file" data-id="{{$file->id}}" style="background: #f64d60; border-color: #f64d60" class="btn btn-danger">Hapus</button>
-                                    </div>
+                                @if ($konseling->status_selesai == 'C')
+                                    @if ($user->id == $file->user->id)
+                                        <div>
+                                            <button data-toggle="edit_file" data-id="{{$file->id}}" data-file_name="{{$file->name}}" class="btn btn-primary">Sunting</button>
+                                        </div>
+                                        <div class="mx-4">
+                                            <button data-toggle="delete_file" data-id="{{$file->id}}" style="background: #f64d60; border-color: #f64d60" class="btn btn-danger">Hapus</button>
+                                        </div>
+                                    @endif
                                 @endif
                                 <div>
                                     <a href="{{$file->path}}" download="{{$file->name.'.'.$file->file_type}}" class="btn btn-success">Unduh</a>

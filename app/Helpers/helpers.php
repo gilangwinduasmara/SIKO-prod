@@ -1,5 +1,5 @@
 <?php
 
 function assetVersion($asset){
-    return $asset."?v=".config('app.version');
+    return "/".$asset."?v=".config('app.version');
 }

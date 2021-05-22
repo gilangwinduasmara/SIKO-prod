@@ -28,8 +28,8 @@
                     @endif
                     Berkas</h3>
                 <div class="card-toolbar">
-                    {{-- {{!!$konseling!!}} --}}
-                    @if ($konseling->status_selesai == 'C')
+                    {{!!$konseling!!}}
+                    @if ($konseling->status_selesai == 'C' && $konseling->refered != 'ya')
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal__upload">
                             Unggah berkas
                         </button>
@@ -56,7 +56,7 @@
                                 <span class="text-muted font-weight-bold">{{ \Carbon\Carbon::parse($file->created_at)->diffForhumans() }} &bull; {{$file->file_size/1000}} KB</span>
                             </div>
                             <div class="d-flex flex-grow-1 justify-content-end">
-                                @if ($konseling->status_selesai == 'C')
+                                @if ($konseling->status_selesai == 'C' && $konseling->refered != 'ya')
                                     @if ($user->id == $file->user->id)
                                         <div>
                                             <button data-toggle="edit_file" data-id="{{$file->id}}" data-file_name="{{$file->name}}" class="btn btn-primary">Sunting</button>

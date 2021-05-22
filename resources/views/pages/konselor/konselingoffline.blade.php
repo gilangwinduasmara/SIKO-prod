@@ -335,7 +335,7 @@
                     },
                 ],
                 ajax: {
-                    url: '/services/konselingoffline/dt',
+                    url: '/services/konselingoffline/dt/',
                     type: 'GET',
                     data: function (d) {
                         d.from = $('#datepicker_dari').val();
